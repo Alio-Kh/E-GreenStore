@@ -1,0 +1,42 @@
+{% extends 'base2.html.twig' %}
+{% block body %}
+
+	<div class="registration">
+		<h3>Connexion</h3>
+
+		<div class="registrationForm">
+			<form action="{{path('login')}}" method="POST">
+
+				{% if error %}
+					<div class="row">
+						{{ error.messageKey|trans(error.messageData, 'security') }}
+						{{ error.message }}
+					</div>
+				{% endif %}
+				<div class="row">
+					<input type="email" placeholder="Adresse email ..." , class="champText" required name="_username"/>
+				</div>
+				<div class="row">
+					<input type="password" placeholder="Votre mot de passe" class="champText" required name="_password"/>
+				</div>
+
+				<button type="submit" class="btn_success">Connécter</button>
+			</div>
+		</form>
+		<br>
+		<a class="button" href="{{path('agr_registration1')}}">
+			Creer un compte agriculteur !!
+		</a>
+		<br>
+		<br>
+		<a class="button" href="{{path('client_registration1')}}">
+			Creer un compte  client !!
+		</a>
+		<br>
+		<br>
+		<a class="button" href="{{path('forget_password')}}">
+			Avez vous oubliez le mot de passe?
+		</a>
+	</div>
+
+{% endblock %}

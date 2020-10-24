@@ -1,0 +1,72 @@
+{%  extends "base_farmer.html.twig" %}
+{% block title %}
+	{{controller_name}}
+{% endblock %}
+{% block bodyFarmer %}
+	<!-- ### $App Screen Content ### -->
+	<main class='main-content bgc-grey-100'>
+		<div id='mainContent'>
+			<div class="container-fluid justify-center">
+				<div class="row">
+					<div class="col-md-8 col-sm-8">
+						<h4 class="c-grey-900 mT-10 mB-30">Les marchés</h4>
+					</div>
+					{% if markets | length  < 3  %}
+						<div class="col-md-4 col-sm-4">
+							<a href="{{path('add_market')}}" class="btn btn-danger btn-block">Ajouter un marche</a>
+						</div>
+					{% endif %}
+				</div>
+				{% if markets  is empty %}
+					<div class="row">
+						<div class="col-md-12">
+							<div class="bgc-white bd bdrs-3 p-20 mB-20">
+								<div class="card mb-3">
+									<div class="card-body text-center">
+										Vous n’avez pas de marché ,
+																				 veuillez créer votre marché
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+
+				{% for market in markets %}
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="bgc-white bd bdrs-3 p-20 mB-20">
+								<div class="card mb-3">
+									<div class="row">
+										<div class="col-md-6">
+											<img src="{{asset(market.image)}}" class="card-img-top " alt="Cinque Terre">
+										</div>
+									</div>
+									<div class="card-body">
+										<h5 class="card-title">{{market.libelle}}</h5>
+										<p class="card-text">{{market.description | raw }}</p>
+										<input name="market" id="" type="hidden" value="{{market.id}}">
+
+
+									</div>
+									<div class="card-footer ">
+
+										<a href="{{ path('show_market',{'id':market.id})}}">
+											<button type="button" class="btn btn-info">voir les produits
+											</button>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				{% endfor %}
+
+
+			</div>
+		</div>
+	</main>
+
+{% endblock  %}

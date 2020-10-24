@@ -1,0 +1,25 @@
+{% extends 'error/errorBase.html.twig' %}
+
+{% block title %}Erreur innatendue {% endblock %}
+
+{% block body %}
+<div  id="erroContainer">
+   <div  id='errorMessage'>
+    <div  id='oops'>
+     <h2>Ooops<i class="fa fa-exclamation-triangle"></i></h2>
+  </div>
+       <h1>Erreur inatendue</h1>
+            <p>
+             Une erreur innatendue s'est produite.
+            </p>
+            <p>
+              Code de l'érreur {{status_code}}
+            </p>
+        </div>
+     </div>
+  </div>
+    
+{% endblock %}
+{% block javascripts %}
+		<script src="{{asset('js/subscribers-ajax.js')}}"></script>
+	{% endblock %}

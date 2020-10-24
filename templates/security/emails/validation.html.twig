@@ -1,0 +1,21 @@
+{% apply inline_css(source('@css/styleZak.css')) %}
+{% block body %}
+<div class="email">
+<div class="email_logo">
+						<a href="./index.html"><img src="{{ email.image('@img/logo5.png') }}" alt=""></a>
+					</div>
+    <h2 class="emailH1">Welcome {{ username }}</h2>           
+  <div class="text">             
+<p class="emalP1">
+   Vous devez rentré le mot de passe suivant  <br> <br>
+   pour continuer votre enregistrement dans <strong class="emailStrong1"> GREENSTORE</strong> <br> <br>
+    -  {{ password }} <br> 
+   <p class="emailP2"> Ce mot de passe va etre expiré dans trois heurs</p> 
+</p>
+</div>
+</div>
+{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{asset('css/styleZak.css')}}" type="text/css">
+{% endblock %}
+{% endapply %}

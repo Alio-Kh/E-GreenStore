@@ -1,0 +1,299 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{controller_name}}
+{% endblock %}
+
+{% block body %}
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src={{ asset('js/checkout.js') }}></script>
+	<script src={{ asset('js/checkout-ajax.js') }}></script>
+
+
+	<!-- Breadcrumb Section Begin -->
+	<section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="breadcrumb__text">
+						<h2>Checkout</h2>
+						<div class="breadcrumb__option">
+							<a href="./index.html">Home</a>
+							<span>Checkout</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Breadcrumb Section End -->
+
+	<!-- Checkout Section Begin -->
+	<section class="checkout spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h6>
+						<span class="icon_tag_alt"></span>
+						Have a coupon?
+						<a href="#">Click here</a>
+						to enter your code
+					</h6>
+				</div>
+			</div>
+
+			{% if app.user %}
+				<div class="checkout__form">
+					<h4 id='billing-label'>Billing Details</h4>
+					<form action="{{path('add_commande')}}" method="post" enctype="multipart/form-data">
+						<div class="row">
+							<div class="col-lg-8 col-md-6">
+								<div id="billing">
+									<div class="checkout__input">
+										<p>Code postale<span>*</span>
+										</p>
+										<input type="text" name='code_postale' id="code_postale">
+									</div>
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="checkout__input">
+												<p>Tel<span>*</span>
+												</p>
+												<input type="text" name='tel' id="tel">
+											</div>
+										</div>
+										<div class="col-lg-6">
+											<div class="checkout__input">
+												<p>Email<span>*</span>
+												</p>
+												<input type="text" name='email' id="email">
+											</div>
+										</div>
+									</div>
+									<div class="checkout__input__checkbox">
+										<label for="diff-acc">
+											Livrer à une autre adresse?
+											<input name="isCurrentAdress" type="checkbox" id="diff-acc">
+											<span class="checkmark"></span>
+										</label>
+									</div>
+									<div id="new_adress" class="checkout__input">
+										<p>Nouvelle Adresse</p>
+										<input name="otherAdress" type="text" placeholder="New adresse">
+									</div>
+									<div class="checkout__input">
+										<p name="notes">Notes
+										</p>
+										<input type="text" placeholder="Notes about your order, e.g. special notes for delivery.">
+									</div>
+									<br><br>
+									{# <button src={{ urlAccessClient }} type='button' id="Buy" class="site-btn">Buy </button> #}
+									<button type='button' id="next-billing" class="site-btn" disabled>Next >
+									</button>
+									<br><br>
+								</div>
+								<script>
+
+									//
+/*
+$(document).ready(function () {
+function isOneChecked() {
+var chx = document.getElementsByName('shipping');
+for (var i = 0; i < chx.length; i++) {
+// If you have more than one radio group, also check the name attribute
+// for the one you want as in && chx[i].name == 'choose'
+// Return true from the function on first match of a checked item
+if (chx[i].type == 'radio' && chx[i].checked) {
+return true;
+}
+}
+// End of the loop, return false
+return false;
+}
+
+$('input[type=radio][name=shipping]').change(function () {
+if (isOneChecked()) {
+$("#next-delievery").removeAttr('disabled');
+console.log(isOneChecked());
+} else {
+$("#next-delievery").attr("disabled", true);
+}
+});
+});*/
+								</script>
+
+								<h4 id="delievery-label">
+									Delievery Info
+								</h4>
+								<style>
+									.showmeonhover {
+										display: none;
+										width: 200px;
+										height: 300px;
+										background-color: #0000FF;
+									}
+									.alwaysshowme:hover .showmeonhover {
+										display: inline;
+									}
+								</style>
+								<div class="col-lg-8 col-md-6">
+									<div id="delievery" class="checkout__input__checkbox">
+										{% for item in typeLivraisons %}
+											<div class="alwaysshowme">
+												<br>
+												{% if item.duree < 24 %}
+													<p>
+														<img style="width:17%" src="{{ asset(item.image) }}" alt="">
+														<b>{{ ' ' ~ item.libelle ~ ' (' ~ item.duree}}h)</b>
+													</p>
+
+												{% elseif item.duree < 168 %}
+													<p><img style="width:17%" src="{{ asset(item.image) }}" alt="">
+														<b>{{ ' ' ~ item.libelle ~ ' (' ~ item.duree/24}}j)</b>
+													</p>
+												{% else %}
+													{% set weeks = (item.duree/7)/24 %}
+													{% if weeks == 1 %}
+														<p><img style="width:17%" src="{{ asset(item.image) }}" alt="">
+															<b>{{ ' ' ~ item.libelle ~ ' (' ~ weeks }}Semaine)</b>
+														</p>
+													{% else %}
+														<p><img style="width:17%" src="{{ asset(item.image) }}" alt="">
+															<b>{{ ' ' ~ item.libelle ~ ' (' ~ weeks }}Semaines)</b>
+														</p>
+													{% endif %}
+												{% endif %}
+												<span class="showmeonhover"><br/>
+													{{ item.description | raw }}
+												</span>
+											</div><br>
+											{% if item.libelle == "Livraison standard" %}
+												<input class="shipping" type="radio" name='shipping' value={{item.id}} id="{{ item.libelle }}" checked>
+											{% else %}
+												<input type="radio" name='shipping' value={{item.id}} id="{{ item.libelle }}">
+											{% endif %}
+
+											{% if item.frais == 0 %}
+												<label for="{{item.libelle}}">
+													Gratuit</label>
+											{% else %}
+												<label for="{{item.libelle}}">
+													{{ item.frais | number_format(2, '.', ',') }}
+													MAD</label>
+											{% endif %}
+
+										{% endfor %}
+										<br><br>
+										<button type='button' id="back-delievery" class="site-btn">
+											back</button>
+										<button type='button' id="next-delievery" class="site-btn">Next >
+
+										</button>
+										<button  type="button" name="add_commande" class="site-btn"> <a href={{urlAccessClient}} >Buy Now </a></button>
+										{# <form action={{urlAccessClient}}>
+											<button type="submit" name="add_commande" class="site-btn" >Buy Now</button>
+										</form> #}
+										<br><br>
+									</div>
+
+								</div>
+
+								<!-- <h4 id='payment-label'>Paiement</h4>
+																<div
+																	id="payment" class="col-lg-8 col-md-6">
+																	{# <script src={{ asset('js/payment.js') }}></script> #}
+																	
+																	<form id="payment-form">
+																		<br>
+																		<div
+																			id="card-element">
+																		</div>
+								
+																		<div id="card-errors" role="alert"></div>
+																		<br>
+																		<input id='conditions' type="checkbox">
+																		<label for="conditions">
+																			I have read and accept the terms and conditions
+																		</label>
+																		<span class="checkmark"></span>
+																		<br><br>
+																		<button type='button' id="back-payment" class="site-btn">
+																			back</button>
+																		{# <a href={{ path('add_commande') }} class="primary-btn">Buy Now</a> #}
+																		<button type="submit" name="add_commande" class="site-btn" disabled>Buy Now</button>
+								
+																	</form>
+								
+																	
+																	<br><br>
+																</div> -->
+							</div>
+						{% endif %}
+
+						<div class="col-lg-4 col-md-6">
+							<div class="checkout__order">
+								<h4>Votre Order</h4>
+								<div class="checkout__order__products">Produits
+									<span>Totale</span>
+								</div>
+								<ul>
+									{% for item in panier %}
+										{% if item.promotion.reduction != 0 and date(item.promotion.dateDebut) < date() and date(item.promotion.dateFin) > date() %}
+
+											<li>{{item.produit.libelle}}
+												<span>{{ ((item.produit.prixUnitaire - item.promotion.reduction* item.produit.prixUnitaire/100)*item.qte) | number_format(2, '.', ',') }}MAD</span>
+											</li>
+										{% else %}
+											<li>{{item.produit.libelle}}
+												<span>{{ item.produit.prixUnitaire | number_format(2, '.', ',') }}</span>
+											</li>
+										{% endif %}
+
+									{% endfor %}
+								</ul>
+								<div class="checkout__order__subtotal">Totale Hors Taxes
+									<span>
+										{{total | number_format(2, '.', ',')}}
+									</span>
+								</div>
+								{% if true %}
+									<div class="checkout__order__total">Frais de Livraison
+										<span>
+											{{total | number_format(2, '.', ',')}}
+										</span>
+									</div>
+									<br>
+								{% endif %}
+
+								<div class="checkout__order__total">Totale (TTC)
+									<span>{{ totalTtc | number_format(2, '.', ',')}}
+										MAD</span>
+								</div>
+								{# 
+																																																																																																																																																																																																																																																																																																																																																																																																		<div class="checkout__input__checkbox">
+																																																																																																																																																																																																																																																																																																																																																																																																			<label for="payment">
+																																																																																																																																																																																																																																																																																																																																																																																																				Check Payment
+																																																																																																																																																																																																																																																																																																																																																																																																				<input type="checkbox" id="payment">
+																																																																																																																																																																																																																																																																																																																																																																																																				<span class="checkmark"></span>
+																																																																																																																																																																																																																																																																																																																																																																																																			</label>
+																																																																																																																																																																																																																																																																																																																																																																																																		</div>
+																																																																																																																																																																																																																																																																																																																																																																																																		<div class="checkout__input__checkbox">
+																																																																																																																																																																																																																																																																																																																																																																																																			<label for="paypal">
+																																																																																																																																																																																																																																																																																																																																																																																																				Paypal
+																																																																																																																																																																																																																																																																																																																																																																																																				<input type="checkbox" id="paypal">
+																																																																																																																																																																																																																																																																																																																																																																																																				<span class="checkmark"></span>
+																																																																																																																																																																																																																																																																																																																																																																																																			</label>
+																																																																																																																																																																																																																																																																																																																																																																																																		</div> #}
+								<button type="submit" class="site-btn">PLACE ORDER</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section><!-- Checkout Section End -->{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('js/subscribers-ajax.js')}}"></script>
+
+{% endblock %}

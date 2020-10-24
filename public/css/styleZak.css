@@ -1,0 +1,346 @@
+body .registration {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    height: auto;
+}
+
+body .registration #vp {
+    width: 600px;
+    color: #7fad39;
+    position: relative;
+    left: 30px;
+    margin: auto;
+}
+
+body .registrationForm {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-between;
+}
+
+.registration small {
+    color: red;
+}
+
+.registrationForm .row {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.registrationForm .row label {
+    width: 100px;
+    display: inline-block;
+}
+
+.registrationForm button {
+    background-color: white;
+    color: #7fad39;
+    border-radius: 5px;
+    border: 1.5px solid #7fad39;
+    min-height: 45px;
+    width: 150px;
+    margin-top: 20px;
+    opacity: 0;
+    animation-name: btn;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+    transition-property: transform;
+    transition-duration: 1s;
+}
+
+.registrationForm button:hover {
+    color: white;
+    background-color: #7fad39;
+}
+
+.registrationForm .row .champText {
+    height: 45px;
+    width: 600px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-right: 17px;
+    border: 1px solid #7fad39;
+    border-radius: 6px;
+    padding-left: 20px;
+}
+
+.registrationForm .row .champText ul {
+    height: auto;
+    position: relative;
+    margin: auto;
+    list-style: none;
+    color: red;
+}
+
+.registrationForm .row .champList {
+    height: 45px;
+    width: 600px;
+    margin-bottom: 15px;
+    margin: auto;
+    border: 1px solid #7fad39;
+    border-radius: 6px;
+    padding-left: 20px;
+    position: relative;
+    left: 40px;
+}
+
+.registrationForm .row .champList ul {
+    color: black;
+}
+
+.registrationForm .row .champList ul li {
+    color: black;
+    width: 450px;
+}
+
+.registrationForm .row p {
+    position: relative;
+    right: 310px;
+    top: 50px;
+}
+
+body .registration a {
+    color: red;
+    padding-top: 20px;
+}
+
+body .registration a:hover {
+    color: #7fad39;
+}
+
+@keyframes btn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/* /////////////////////  EMAIL CSS    ////////////////////////////////  */
+
+.email_logo {
+    margin: auto;
+}
+
+.email {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+}
+
+.text {
+    min-height: 200px;
+    text-align: left;
+    border: #7fad39 solid 0.5px;
+    border-radius: 5px;
+}
+
+.emailH1 {
+    font-size: 25px;
+    font-family: "Cairo", sans-serif;
+    color: #7fad39;
+    width: auto;
+    height: auto;
+    text-align: left;
+    margin: auto;
+    border-bottom: 0.5px solid gray;
+    margin-bottom: 20px;
+}
+
+.emalP1 {
+    width: auto;
+    height: auto;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-left: 40px;
+}
+
+.emailP2 {
+    width: auto;
+    height: auto;
+    margin: auto;
+    padding-left: 40px;
+}
+
+.emailStrong1 {
+    color: #7fad39;
+}
+
+.typeStrong1 {
+    color: red;
+}
+
+
+/* :::::::::::::::::::  RESPONSIVE design ////////////////////////////// */
+
+@media all and (max-width: 800px) and (min-width: 630px) {
+    body .registration {
+        width: auto;
+    }
+    body .registration #vp {
+        width: 450px;
+        height: auto;
+        position: relative;
+        left: 40px;
+    }
+    body .registrationForm {
+        width: auto;
+        height: auto;
+    }
+    .registrationForm button {
+        margin: auto;
+    }
+    .registrationForm .row {
+        width: auto;
+        height: auto;
+    }
+    .registrationForm .row .champText {
+        width: 450px;
+        height: 45px;
+    }
+    .registrationForm .row .champText ul {
+        width: auto;
+        height: auto;
+    }
+    .registrationForm .row .champList {
+        width: 450px;
+        height: 45px;
+    }
+    .registrationForm .row .champList ul {
+        width: auto;
+        height: auto;
+    }
+    .registrationForm .row p {
+        max-width: 200px;
+        margin-left: 42%;
+    }
+    .registrationForm .row .champList ul li {
+        width: auto;
+        height: auto;
+    }
+}
+
+@media all and (max-width: 630px) and (min-width: 433px) {
+    body .registration {
+        width: auto;
+    }
+    body .registrationForm {
+        width: auto;
+        height: auto;
+    }
+    body .registration #vp {
+        width: 300px;
+        height: auto;
+        text-align: center;
+        position: relative;
+        left: 40px;
+    }
+    .registrationForm .row p {
+        text-align: center;
+        padding-left: 285px;
+    }
+    .registrationForm .row .champList {
+        width: 300px;
+        height: 40px;
+    }
+    .registrationForm .row .champText {
+        width: 300px;
+        height: 40px;
+    }
+    .registrationForm .btn_success_arg_reg {
+        margin-left: 15%;
+    }
+    .registrationForm .row .champList ul li {
+        width: auto;
+        height: auto;
+    }
+    .registrationForm .row .champList ul {
+        width: auto;
+        height: auto;
+    }
+}
+
+@media all and (max-width: 433px) {
+    body .registration {
+        width: auto;
+    }
+    body .registrationForm {
+        width: auto;
+        height: auto;
+    }
+    body .registration #vp {
+        width: 200px;
+        height: auto;
+        margin-right: 30%;
+    }
+    .registrationForm .row p {
+        width: 120px;
+        max-height: 35px;
+        text-align: left;
+        margin: auto;
+        margin-bottom: 60px;
+    }
+    .registrationForm .row .champList {
+        width: 300px;
+        height: 40px;
+        margin-right: 20%;
+    }
+    .registrationForm .row .champText {
+        width: 300px;
+        height: 40px;
+    }
+    .registrationForm .btn_success_arg_reg {
+        margin-left: 15%;
+    }
+    .registrationForm .row .champList ul {
+        width: 100px;
+        height: auto;
+    }
+    .registrationForm .row .champList ul li {
+        width: auto;
+        height: auto;
+    }
+}
+
+
+/* :::::::::::::::::::::::::::  errorPages //////////////////// */
+
+body #erroContainer {
+    height: 50vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+#erroContainer #errorMessage {
+    background-color: rgb(0, 0, 0, 0.03);
+    margin: auto;
+    height: auto;
+    border: solid 1px gray;
+    border-radius: 4px;
+    box-shadow: rgb(0, 0, 0, 0.15) 5px 6px 6px;
+}
+
+#errorMessage h1 {
+    color: #7fad39;
+}
+
+#errorMessage h2 {
+    color: #fb7813;
+    font-size: 50px;
+}

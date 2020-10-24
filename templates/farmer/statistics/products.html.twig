@@ -1,0 +1,62 @@
+{%  extends "base_farmer.html.twig" %}
+{% block title %} {{controller_name}}
+{% endblock %}
+{% block bodyFarmer %}
+	<!-- ### $App Screen Content ### -->
+	<main class='main-content bgc-grey-100'>
+		<div id='mainContent'>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="bgc-white bd bdrs-3 p-20 mB-20">
+							<h4 class="c-grey-900 mT-10 mB-30">
+								<a href="{{ path('farmer_statistics')}}">
+									<i class="ti-arrow-left mR-10"></i>
+								</a>
+								Produits</h4>
+							{% for market in  markets  %}
+								<hr>
+								<h5 class="c-grey-900 mT-10 mB-30">Marché  :
+									{{market.libelle}}</h5>
+								<div class="table-responsive">
+									<table class="table table-striped " cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th>Imgae</th>
+												<th>Libelle</th>
+												<th>Description</th>
+												<th>Date Ajout</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for produit in market.produits %}
+												<tr>
+													<td>
+														<img style="width:60px" src="{{asset(produit.image)}}" class="img-sm img-rounded" alt="Cinque Terre">
+													</td>
+													<td>{{produit.libelle}}</td>
+													<td>{{produit.description}}</td>
+													<td>{{produit.dateAjout  | date('Y-m-d')}}
+													</td>
+													<td>
+														<a href="{{path('product_statistics',{'id':produit.id})}}" style="color:chocolate;font-size:16px">
+															<i class=" ti-eye"></i>
+															voir les statistiques
+														</a>
+													</td>
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+{% endblock  %}

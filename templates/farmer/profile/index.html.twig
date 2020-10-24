@@ -1,0 +1,103 @@
+{%  extends "base_farmer.html.twig" %}
+{% block title %} {{controller_name}}
+{% endblock %}
+{% block bodyFarmer %}
+	<main class='main-content bgc-grey-100'>
+		<div id='mainContent'>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="c-grey-900 mT-10 mB-30">
+							<a href=" ">
+								<i class="ti-arrow-left mR-10"></i>
+							</a>Profile</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="bgc-white bd bdrs-3 p-20 mB-20">
+							<div class="masonry-item  ">
+								<div class="bgc-white p-20 bd">
+									<div class="mT-30 ">
+										<div class="row ">
+											<div class=" col-md-12 d-flex justify-content-center">
+												<img src="{{asset('img/user.png')}}" alt="..." class="img-thumbnail">
+											</div>
+											<div class=" col-md-12 d-flex justify-content-center mt-4">
+												<p class="text-muted font-13">
+													<strong>nom complet :</strong>
+													<span class="m-l-15">
+														{{agriculteur.nom}}
+														{{agriculteur.prenom}}</span>
+												</p>
+											</div>
+											<div class=" col-md-12 d-flex justify-content-center">
+
+												<p class="text-muted font-13">
+													<strong>
+														Telephone :</strong>
+													<span class="m-l-15">
+														{{agriculteur.tele}}</span>
+												</p>
+											</div>
+											<div class=" col-md-12 d-flex justify-content-center">
+
+												<p class="text-muted font-13">
+													<strong>
+														Email :</strong>
+													<span class="m-l-15">
+														{{user.email}}
+													</span>
+												</p>
+											</div>
+											<div class=" col-md-12 d-flex justify-content-center">
+												<p class="text-muted font-13">
+													<strong>
+														Region :</strong>
+													<span class="m-l-15">
+														{{agriculteur.commune.ville.region.libelle}}
+													</span>
+												</p>
+
+											</div>
+											<div class=" col-md-12 d-flex justify-content-center">
+												<p class="text-muted font-13">
+													<strong>
+														Ville :</strong>
+													<span class="m-l-15">
+														{{agriculteur.commune.ville.libelle}}
+													</span>
+												</p>
+
+											</div>
+											<div class=" col-md-12 d-flex justify-content-center">
+												<p class="text-muted font-13">
+													<strong>
+														Commune :</strong>
+													<span class="m-l-15">
+														{{agriculteur.commune.libelle}}
+													</span>
+												</p>
+											</div>
+											<div class=" col-md-12 d-flex justify-content-center">
+												<p class="text-muted font-13">
+													<strong>
+														Adresse :</strong>
+													<span class="m-l-15">
+														{{agriculteur.adresse}}
+													</span>
+												</p>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}

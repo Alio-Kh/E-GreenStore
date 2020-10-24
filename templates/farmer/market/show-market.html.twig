@@ -1,0 +1,108 @@
+{%  extends "base_farmer.html.twig" %}
+{% block title %} {{controller_name}}
+{% endblock %}
+{% block bodyFarmer %}
+	<!-- ### $App Screen Content ### -->
+	<main class='main-content bgc-grey-100'>
+		<div id='mainContent'>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="bgc-white bd bdrs-3 p-20 mB-20">
+							<div class="row">
+								<div class="col-md-10 col-sm-8">
+									<h4 class="c-grey-900 mT-10 mB-30">
+										<a href="{{ path('markets')}}">
+											<i class="ti-arrow-left mR-10"></i>
+										</a>
+										{{market.libelle}}</h4>
+								</div>
+								<div class="col-md-2 col-sm-4">
+									<div class="dropdown open">
+										<button class="btn btn-default dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Action
+										</button>
+										<div class="dropdown-menu" aria-labelledby="triggerId">
+											<a class="dropdown-item" href="{{path('add_product',{'id':market.id})}}">
+												<i class="ti-plus"></i> Produit</a>
+											<a class="dropdown-item" href="{{path('edit_market',{'id':market.id})}}">
+												<i class=" ti-pencil"></i>Editer</a>
+
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<div class="table-responsive">
+
+								<table class="table table-striped " cellspacing="0" width="100%">
+									<thead>
+										<tr>
+											<th>Imgae</th>
+											<th>Libelle</th>
+											<th>Date de production</th>
+											<th>Bio</th>
+											<th>Stock</th>
+											<th>Prix unitaire</th>
+											<th>Promotion</th>
+											<th>La réduction est-elle active?</th>
+											<th></th>
+											<th></th>
+											<th></th>
+
+										</tr>
+									</thead>
+									<tbody>
+										{% for produit in produits %}
+											<tr>
+												<td>
+													<img style="width:60px" src="{{asset(produit.image)}}" class="img-sm img-rounded" alt="Cinque Terre">
+												</td>
+												<td>{{produit.libelle}}</td>
+												<td>{{produit.dateProduction | date("m/d/Y") }}</td>
+												<td>
+													{% if produit.isBio %}
+														oui
+													{% else %}
+														non
+													{% endif %}
+												</td>
+												<td>{{produit.stock}}</td>
+												<td>{{produit.prixUnitaire}}DH</td>
+												<td>{{produit.promotion.reduction}}%</td>
+												<td>
+													{% if date(produit.promotion.dateFin) >= date() and date(produit.promotion.dateDebut) < date() and produit.promotion.reduction >0 %}
+														oui
+													{% else %}
+														non
+													{% endif %}
+												</td>
+												<td>
+													<a href="{{path('edit_product',{'id':produit.id })}}" style="color:darkorange;font-size:16px">
+														<i class=" ti-pencil"></i>Editer
+													</a>
+												</td>
+												<td>
+													<a href="{{path('delete_product',{'id':produit.id})}}" style="color:red;font-size:16px">
+														<i class=" ti-trash"></i>Supprimer
+													</a>
+												</td>
+												<td>
+													<a href="{{path('details_product',{'id':produit.id})}}" style="color:chocolate;font-size:16px">
+														<i class=" ti-plus"></i>Details
+													</a>
+												</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+{% endblock  %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<head><meta charset='UTF-8'>
+		<title>Express Mail</title>
+	</head>
+	<body>
+		<table style='width: 100%;'>
+			<thead style='text-align: center;'>
+				<tr>
+					<td style='border:none;' colspan='2'></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style='border:none;'>
+						<strong>Nom:</strong>
+						{{data.nom}}</td>
+					<td style='border:none;'>
+						<strong>Email:</strong>
+						{{data.email}}</td>
+				</tr>
+				<tr>
+					<td style='border:none;'>
+						<strong>Sujet:</strong>
+						{{data.sujet}}</td>
+				</tr>
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan='2' style='border:none;'>{{data.message}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,113 @@
+{%  extends "base_farmer.html.twig" %}
+{% block title %} {{controller_name}}
+{% endblock %}
+{% block bodyFarmer %}
+	<main class='main-content bgc-grey-100'>
+		<div id='mainContent'>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="c-grey-900 mT-10 mB-30">
+							<a href="{{path('setting')}}">
+								<i class="ti-arrow-left mR-10"></i>
+							</a>Informations personnelles</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="bgc-white bd bdrs-3 p-20 mB-20">
+							<div class="masonry-item  ">
+								<div class="bgc-white p-20 bd">
+									<div class="mT-30">
+										<div class="form-row">
+
+											{{ form_start(form, {'attr':{'class':'form-control'}}) }}
+											<div class="form-group col-md-12">
+												{{ form_errors(form) }}
+											</div>
+											<div class="form-group col-md-12">
+												{{ form_row(form.nom, {'attr':{'placeholder':'Votre nom','class':'form-control' }})}}
+											</div>
+											<div class="form-group col-md-12">
+												{{ form_row(form.prenom, {'attr':{'placeholder':'Votre prenom', 'class':'form-control'  }}) }}
+											</div>
+											<div class="form-group col-md-12">
+												{{ form_row(form.cin, {'attr':{'placeholder':'Votre numéro de la carte nationale','class':'form-control' }}) }}
+											</div>
+											<div class="form-group col-md-12">
+												{{ form_row(form.adresse, {'attr':{'placeholder':'La location de votre ferme', 'class':'form-control' }}) }}
+											</div>
+											<div class="form-group col-md-12">
+												{{ form_row(form.telephon, {'attr':{'placeholder':'numéro du téléphon','class':'form-control' }}) }}
+											</div>
+											<div class="form-group col-md-12">
+												<p>Votre région</p>
+												{{ form_widget(form.region, {'attr':{ 'class':'form-control  ' }}) }}
+											</div>
+											<div class="form-group col-md-12">
+												<p>Votre ville</p>
+												{{ form_widget(form.ville, {'attr':{ 'class':'form-control ville ' }}) }}
+											</div>
+											<div class="form-group col-md-12">
+												<p>Votre commune</p>
+												{{ form_widget(form.commune, {'attr':{ 'class':'form-control commune  ' }}) }}
+											</div>
+											<div class="form-group col-md-12 d-flex justify-content-center ">
+												<button type="submit" class="btn btn-success">Enregistrer le modifications</button>
+											</div>
+										</div>
+										{{ form_rest(form) }}
+
+										{{ form_end(form) }}
+
+
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
+ {% block javascriptsPresonnel %}
+<script>
+	$(document).ready(function () {
+              $(document).on('change','#form_region',function(){
+				    
+                  var $form = $(this).closest('form');
+                  var data = {};
+                  data['region'] = $('#form_region').val();
+                  data['activeregion'] = '1';
+                  $.ajax({
+                  url: $form.attr('action'),
+                  type: $form.attr('method'),
+                  data: data,
+                      success: function (html) {
+                        $('.ville').hide();
+                        $('#form_ville').replaceWith($(html).find('#form_ville'));
+                         $('.commune').hide();
+                          $('#form_commune').replaceWith($(html).find('#form_commune'));
+                        }
+                    });
+              });
+         $(document).on('change','#form_ville',function(){
+			     
+                  var $form = $(this).closest('form');
+                  var data = {};
+                  data['ville'] = $('#form_ville').val();
+                  data['activeville'] = '1';
+                  $.ajax({
+                  url: $form.attr('action'),
+                  type: $form.attr('method'),
+                  data: data,
+                  success: function (html) {
+                            $('.commune').hide();
+                          $('#form_commune').replaceWith($(html).find('#form_commune'));
+                          }
+                   });
+        });
+  });
+</script>{% endblock %}

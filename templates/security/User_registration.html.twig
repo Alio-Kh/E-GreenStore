@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<div class="registration">
+		<h3>Les information de votre compte</h3>
+		<br/>
+		{{ form_start(form) }}
+
+		<div class="registrationForm">
+			<div class="errors">
+				{{ form_errors(form) }}
+			</div>
+
+			<div class="row">
+				{{ form_row(form.email, {'attr':{'placeholder':'Votre adresse email','class':'champText'
+
+      }}) }}
+			</div>
+			<div class="row">
+				{{ form_row(form.password, {'label':'Mot de passe','attr':{'placeholder':'Mot de passe', 'class':'champText'
+
+      }}) }}
+			</div>
+			<div class="row">
+				{{ form_row(form.confirm_password, {'label':'Confirmation','attr':{'placeholder':'Confirmer le mot de passe','class':'champText'
+
+      }}) }}
+			</div>
+			<button type="submit" class="btn_success">S'inscrire</button>
+		</div>
+	</div>
+	{{ form_rest(form) }}
+
+	{{ form_end(form) }}
+
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{%  extends "base_farmer.html.twig" %}
+{% block title %} {{controller_name}}
+{% endblock %}
+{% block bodyFarmer %}
+	<main class='main-content bgc-grey-100'>
+		<div id='mainContent'>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="c-grey-900 mT-10 mB-30">
+							<a href="{{path('farmer')}}">
+								<i class="ti-arrow-left mR-10"></i>
+							</a>Paramètre</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="bgc-white bd bdrs-3 p-20 mB-20">
+							<div class="masonry-item  ">
+								<div class="bgc-white p-20 bd">
+									<div class="mT-30 ">
+										<div class="row ">
+											<div class=" col-md-12 d-flex justify-content-center">
+												<a href="{{path('infos')}}">
+													<h5>
+														Informations personnelles
+														<br>
+														<small>
+															Modifier votre informations personnelles
+														</small>
+													</h5>
+
+												</div>
+												<div class=" col-md-12 d-flex justify-content-center mt-5">
+													<a href="{{path('securite')}}">
+														<h5>Sécurité 
+															<small>
+																(Modifier votre mot de passe )
+															</small>
+                                                        
+														</h5>
+													</div>
+												</div>
+												
+
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		{% endblock %}

@@ -1,0 +1,142 @@
+{%  extends "base_farmer.html.twig" %}
+{% block title %} {{controller_name}}
+{% endblock %}
+{% block bodyFarmer %}
+	<main class='main-content bgc-grey-100'>
+		<div id='mainContent'>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="c-grey-900 mT-10 mB-30">
+							<a href="{{ path('show_market', {'id': market.id } ) }}">
+								<i class="ti-arrow-left mR-10"></i>
+							</a>Ajouter un produit</h4>
+					</div>
+				</div>
+				<div class="row">
+					{% if message is defined %}
+						<div class="form-group col-md-12">
+							<div class="alert alert-danger" role="alert">
+								<strong>{{ message | raw }}</strong>
+							</div>
+						</div>
+					{% endif %}
+					{% if add is defined %}
+						<div class="form-group col-md-12">
+							<div class="alert alert-info" role="alert">
+								<strong>{{add | raw }}</strong>
+							</div>
+						</div>
+					{% endif %}
+					<div class="col-md-12">
+						<div class="bgc-white bd bdrs-3 p-20 mB-20">
+
+							<div class="masonry-item  ">
+								<div class="bgc-white p-20 bd">
+									<div class="mT-30">
+										<form action="{{path('add_product',{'id':market.id})}}" method="post" enctype="multipart/form-data">
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label for="inputEmail4">Description</label>
+													<textarea class="form-control" id="inputEmail4" name="description" placeholder="Description">{% if produit is defined %}{{produit.description}}{% endif %}</textarea>
+												</div>
+												<div class="form-group col-md-6">
+													<label for="inputEmail5">Informations</label>
+													<textarea class="form-control" id="inputEmail5" name="information" placeholder="Informations">{% if produit is defined %}{{produit.information }}{% endif %}</textarea>
+												</div>
+											</div>
+
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label for="stock">Stock</label>
+													<input type="text" class="form-control" name="stock" id="stock" value="{% if produit is defined %}{{produit.stock}}{% endif %}">
+												</div>
+												<div class="form-group col-md-6">
+													<label for="libelle">Libelle</label>
+													<input type="text" class="form-control" name="libelle" id="libelle" value="{% if produit is defined %}{{produit.libelle}}{% endif %}">
+												</div>
+												<div class="form-group col-md-12">
+													<label for="inputAddress">Date de production</label>
+													<input type="date" class="form-control" name="dateProduction" id="inputAddress" value="{% if produit is defined %}{{produit.dateProduction | date('Y-m-d')}}{% endif %}">
+												</div>
+
+												<div class="form-group col-md-6">
+													<label for="prixU">Prix unitaire</label>
+													<input type="text" class="form-control" name="prixU" id="prixU" value="{% if produit is defined %}{{produit.prixUnitaire}}{% endif %}">
+												</div>
+												<div class="form-group col-md-4">
+													<div class="form-group">
+														<label for="categorie">Categorie</label>
+														<select class="form-control" name="categorie" id="categorie">
+															{% for categorie in categories %}
+																<option value="{{categorie.id}}">{{categorie.libelle}}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+												<div class="form-group col-md-2">
+													<div class="form-group">
+														<label for="unite">Unité</label>
+														<select class="form-control" name="unite" id="unite">
+															<option>Kg</option>
+															<option>Piece</option>
+														</select>
+													</div>
+												</div>
+
+												<div class="form-group col-md-6">
+													<label for="promotion">Promotion (%)</label>
+													<input type="text" class="form-control" name="promotion" id="promotion" value="{% if produit is defined %}{{produit.promotion.reduction}}{% endif %}">
+												</div>
+												<div class="form-group col-md-3">
+													<label for="inputAddress">Date de début</label>
+													<input type="date" class="form-control" name="dateDebut" id="inputAddress" value="{% if produit is defined %}{{produit.promotion.dateDebut | date('Y-m-d')}}{% endif %}">
+												</div>
+												<div class="form-group col-md-3">
+													<label for="inputAddress">Date de fin</label>
+													<input type="date" class="form-control" name="dateFin" id="inputAddress" value="{% if produit is defined %}{{produit.promotion.dateFin | date('Y-m-d')}}{% endif %}">
+												</div>
+												<div class="form-group col-md-12">
+													<label for="inputGroupFileAddon01">Image</label>
+													<input type="file" class="form-control" name="file" id="customFile" accept="image/png, image/jpeg">
+													<br><br>
+												</div>
+
+											</div>
+											<div></div>
+											<div class="form-group">
+
+												<div class="checkbox checkbox-circle checkbox-info peers ai-c">
+													<input type="checkbox" id="inputCall2" name="bio" class="peer">
+													<label for="inputCall2" class=" peers peer-greed js-sb ai-c">
+														<span class="peer peer-greed">
+															produit biologique
+														</span>
+													</label>
+												</div>
+											</div>
+											<button type="submit" name="addProduct" class="btn btn-primary">Ajouer</button>
+										</form>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
+{% block javascripts %}
+	<script>
+		(function () {
+
+$(".custom-file-input").on("change", function () {
+var fileName = $(this).val().split("\\").pop();
+$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+
+})();
+	</script>
+{% endblock %}

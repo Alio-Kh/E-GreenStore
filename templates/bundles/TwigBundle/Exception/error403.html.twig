@@ -1,0 +1,27 @@
+{% extends 'error/errorBase.html.twig' %}
+
+{% block title %}Accès interdit{% endblock %}
+
+{% block body %}
+<div  id="erroContainer">
+   <div  id='errorMessage'>
+    <div  id='oops'>
+     <h2>Ooops<i class="fa fa-exclamation-triangle"></i></h2>
+       </div>
+       <h1>Accès interdit</h1>
+        <p>
+            Vous ne disposez pas des autorisations nécessaires pour accéder à cette page.
+        </p>
+         <p>
+              Code de l'érreur {{status_code}}
+            </p>
+        </div>
+     </div>
+  </div>
+    
+{% endblock %}
+{% block javascripts %}
+		<script src="{{asset('js/subscribers-ajax.js')}}"></script>
+	{% endblock %}
+
+

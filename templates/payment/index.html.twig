@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PaymentController!
+{% endblock %}
+
+{% block body %}
+
+	{# <script src={{ asset('js/payment.js') }}></script> #}
+	<script src="https://js.stripe.com/v3/"></script>
+	{# <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script> #}
+	<script>
+		(async () => {
+const response = await fetch('/secret');
+const {client_secret: clientSecret} = await response.json();
+// Call stripe.confirmCardPayment() with the client secret.
+})();
+	</script>
+
+	<form id="payment-form">
+		<div
+			id="card-element"><!-- Elements will create input elements here -->
+		</div>
+
+		<!-- We'll put the error messages in this element -->
+		<div id="card-errors" role="alert"></div>
+
+		<a href={{ path('add_commande') }} class="primary-btn">Buy Now</a>
+		{# <button type="submit" class="site-btn">Buy Now</button> #}
+	</form>
+
+	<script>
+		// Stripe
+
+var stripe = Stripe('pk_test_51H5ZPgFR4NVul0MEsAOIyx8p49vpgH3fUq6U77GPFOHIpbp0wEWlWo7PcaUpD9zPItyouaOIsgm3vCd80rQGr3vX00RvHmXYBT');
+var elements = stripe.elements();
+
+var style = {
+base: {
+color: "#32325d"
+}
+};
+
+var card = elements.create("card", {style: style});
+card.mount("#card-element");
+
+
+card.on('change', ({error}) => {
+const displayError = document.getElementById('card-errors');
+if (error) {
+displayError.textContent = error.message;
+} else {
+displayError.textContent = '';
+}
+});
+
+
+var form = document.getElementById('payment-form');
+
+form.addEventListener('submit', function (ev) {
+ev.preventDefault();
+stripe.confirmCardPayment(clientSecret, {
+payment_method: {
+card: card,
+billing_details: {
+name: 'Jenny Rosen'
+}
+}
+}).then(function (result) {
+if (result.error) { // Show error to your customer (e.g., insufficient funds)
+console.log(result.error.message);
+} else { // The payment has been processed!
+if (result.paymentIntent.status === 'succeeded') {
+// Show a success message to your customer
+// There's a risk of the customer closing the window before callback
+// execution. Set up a webhook or plugin to listen for the
+// payment_intent.succeeded event that handles any business critical
+// post-payment actions.
+}
+}
+});
+});
+
+	</script>
+
+{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('js/subscribers-ajax.js')}}"></script>
+
+{% endblock %}

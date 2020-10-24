@@ -1,0 +1,317 @@
+<!-- Page Preloder -->
+<div id="preloder">
+	<div class="loader"></div>
+</div>
+
+<!-- Humberger Begin -->
+<div class="humberger__menu__overlay"></div>
+<div class="humberger__menu__wrapper">
+	<div class="humberger__menu__logo">
+		<a href="#"><img src="{{asset('img/logo5.png')}}" alt=""></a>
+	</div>
+	<div class="humberger__menu__cart">
+		<ul>
+			<li>
+				<a href="{{ path('shoping_cart')}}">
+					<i class="fa fa-shopping-bag"></i>
+					{% set panier = app.session.get('panier') | length %}
+					{% set totalItems  = app.session.get('totalItems')  %}
+					<span class="panier-length">
+						{{panier}}
+					</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div class="humberger__menu__widget">
+		<div class="header__top__right__language">
+			<img src="{{asset('img/language.png')}}" alt="">
+			<div>Français</div>
+			<span class="arrow_carrot-down"></span>
+			<ul>
+				<li><a href="#">Français</a></li>
+			</ul>
+		</div>
+		<div class="header__top__right__auth">
+			<a href="{{path('login')}}">
+				<i class="fa fa-user"></i>
+				connexion</a>
+		</div>
+		{% if app.user %}
+			<div class="header__top__right__auth">
+				<a href="{{path('logout')}}">
+					<i class="fa fa-user"></i>
+					déconnexion</a>
+			</div>
+		{% endif %}
+	</div>
+	<nav class="humberger__menu__nav mobile-menu">
+		<ul>
+			<li >
+				<a href="{{ path('home') }}">Accueil</a>
+			</li>
+			<li>
+				<a href="{{ path('shoping_grid')}}">Achat</a>
+			</li>
+			<li>
+				<a href="{{ path('farmer')}}">Vente</a>
+			</li>
+			<li>
+				<a href="{{ path('blog') }}">Blog</a>
+			</li>
+			<li>
+				<a href="{{ path('contact') }}">Contact</a>
+			</li>
+		</ul>
+	</nav>
+	<div id="mobile-menu-wrap"></div>
+	<div class="header__top__right__social">
+		<a href="#">
+			<i class="fa fa-facebook"></i>
+		</a>
+		<a href="#">
+			<i class="fa fa-twitter"></i>
+		</a>
+		<a href="#">
+			<i class="fa fa-linkedin"></i>
+		</a>
+		<a href="#">
+			<i class="fa fa-pinterest-p"></i>
+		</a>
+	</div>
+	<div class="humberger__menu__contact">
+		<ul>
+			<li>
+				<i class="fa fa-envelope"></i>
+				contact@greenstore.ma</li>
+		</ul>
+	</div>
+</div>
+
+
+<!-- Header Section Begin -->
+<header class="header">
+	<div class="header__top">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-6">
+					<div class="header__top__left">
+						<ul>
+							<li>
+								<i class="fa fa-envelope"></i>
+								contact@greenstore.ma</li>
+ 						</ul>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6">
+					<div class="header__top__right">
+						<div class="header__top__right__social">
+							<a href="#">
+								<i class="fa fa-facebook"></i>
+							</a>
+							<a href="#">
+								<i class="fa fa-twitter"></i>
+							</a>
+							<a href="#">
+								<i class="fa fa-linkedin"></i>
+							</a>
+							<a href="#">
+								<i class="fa fa-pinterest-p"></i>
+							</a>
+						</div>
+						<div class="header__top__right__language">
+							<img src="{{asset('img/language.png')}}" alt="">
+							<div>Français</div>
+							<span class="arrow_carrot-down"></span>
+							<ul>
+
+								<li><a href="#">Français</a></li>
+							</ul>
+						</div>
+						
+						{% if app.user %}
+							<div class="header__top__right__auth">
+								<a href="{{path('logout')}}">
+									<i class="fa fa-user"></i>
+									déconnexion</a>
+							</div>
+						 {% else %}
+						 <div class="header__top__right__auth">
+							<a href="{{path('login')}}">
+								<i class="fa fa-user"></i>
+								connexion</a>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3">
+				<div class="header__logo">
+					<a href="{{ path('home')}}"><img src="{{asset('img/logo5.png')}}" alt=""></a>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<nav class="header__menu">
+					<ul>
+						<li  >
+							<a href="{{ path('home')}}">Accueil</a>
+						</li>
+						<li>
+							<a href="{{ path('shoping_grid')}}">Achat</a>
+						</li>
+						<li>
+							<a href="{{ path('farmer')}}">Vente</a>
+						</li>
+						<li>
+							<a href="{{ path('blog')}}">Blog</a>
+						</li>
+						<li>
+							<a href="{{ path('contact')}}">Contact</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div class="col-lg-3">
+
+				<div class="header__cart">
+					<ul>
+						<li>
+							<a href="{{ path('shoping_cart')}}">
+								<i class="fa fa-shopping-bag"></i>
+								{% set panier = app.session.get('panier') | length %}
+								<span class="panier-length">
+									{{panier}}
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="humberger__open">
+			<i class="fa fa-bars"></i>
+		</div>
+	</div>
+</header>
+<!-- Header Section End -->
+
+<!-- Hero Section Begin -->
+ 
+<section class="hero hero-normal">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3">
+				<div class="hero__categories">
+					<div class="hero__categories__all">
+						<i class="fa fa-bars"></i>
+						<span>Filter</span>
+					</div>
+					<form action="{{path('filter')}}" method="get">
+						<ul>
+							{% set filter = app.session.get('filter') %}
+							<li>
+								<p>
+									categories</p>
+								{% for categorie in categories %}
+									{{categorie.libelle}}
+									{% if categorie.libelle|replace({' ':'_'}) in filter|keys %}
+										<input type="checkbox" name="{{categorie.libelle |replace([' ','_'] )}}" id="" autocomplete="off" checked>
+									{% else %}
+										<input type="checkbox" name="{{categorie.libelle | replace([' ','_'] )}}" id="" autocomplete="off">
+									{% endif %}
+									<br>
+								{% endfor %}
+								<hr>
+							</li>
+							<li>
+								<p>
+									<div class="btn-group" data-toggle="buttons">
+										{% if 'bio' in filter|keys %}
+											<label class="btn btn-light ">
+												Bio
+												<input type="checkbox" name="bio" id="" checked>
+											</label>
+										{% else %}
+											<label class="btn btn-light ">
+												Bio
+												<input type="checkbox" name="bio" id="" autocomplete="off">
+											</label>
+										{% endif %}
+									</div><hr>
+								</p>
+							</li>
+							<li>
+								<p>
+									Prix</p>
+								<div class="btn-group" data-toggle="buttons">
+									{% if 'prix' in filter|keys %}
+										<label class="btn btn-light ">
+											Au moins de 100 DH
+											<input type="checkbox" name="prix" id="" autocomplete="off" checked>
+										</label>
+									{% else %}
+										<label class="btn btn-light ">
+											Au moins de 100 DH
+											<input type="checkbox" name="prix" id="" autocomplete="off">
+										</label>
+									{% endif %}
+								</div>
+								<hr>
+							</li>
+							<li>
+
+								<div class="btn-group" data-toggle="buttons">
+									{% if 'promotion' in filter|keys %}
+										<label class="btn btn-light ">
+											Promotion
+											<input type="checkbox" name="promotion" id="" autocomplete="off" checked>
+										</label>
+									{% else %}
+										<label class="btn btn-light ">
+											Promotion
+											<input type="checkbox" name="promotion" id="" autocomplete="off">
+										</label>
+									{% endif %}
+								</div>
+								<hr>
+							</li>
+
+							<li>
+								<button type="submit" class="btn btn-dark">Applique le filter</button>
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+
+			<div class="col-lg-9">
+				<div class="hero__search">
+					<div class="hero__search__form">
+						<form action="{{path('search')}}">
+							<div class="hero__search__categories">
+								GreenStore
+							</div>
+							<input type="text" name="query" placeholder="De quoi as-tu besoin ?">
+							<button type="submit" class="site-btn">Rechercher</button>
+						</form>
+					</div>
+					<div class="hero__search__phone">
+						<div class="hero__search__phone__icon">
+							<i class="fa fa-phone"></i>
+						</div>
+						<div class="hero__search__phone__text">
+							<h5>+212 6000-00000</h5>
+							<span>support 24/7 time</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Hero Section End -->

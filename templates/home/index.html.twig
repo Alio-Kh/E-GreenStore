@@ -1,0 +1,474 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{controller_name}}
+{% endblock %}
+
+{% block body %}
+
+	<!-- Categories Section Begin -->
+	<section class="categories">
+		<div class="container">
+			<div class="row">
+				<div class="categories__slider owl-carousel">
+					{% for categorie in categories %}
+						<div class="col-lg-3">
+							<div class="categories__item set-bg" data-setbg="{{asset(categorie.image)}}">
+								<h5>
+									<a href="{{path('category',{'id':categorie.id})}}">{{categorie.libelle}}</a>
+								</h5>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Categories Section End -->
+
+	<!-- Featured Section Begin -->
+	<section class="featured spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="section-title">
+						<h2>Produits les plus vendus</h2>
+					</div>
+					<div class="featured__controls">
+						<ul>
+							<li class="active" data-filter="*">Toutes</li>
+							{% for categorie in categoriesVente %}
+								<li data-filter=".{{ categorie.libelle | replace({' ': "_"}) }}">{{categorie.libelle}}</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="row featured__filter">
+				{% for categorie in categoriesVente %}
+					{% for produit in categorie.produits %}
+						<div class="col-lg-3 col-md-4 col-sm-6 mix {{ categorie.libelle | replace({' ': "_"}) }} ">
+							<div class="featured__item">
+								<div class="featured__item__pic set-bg" data-setbg="{{asset(produit.image)}}">
+									{% if produit.promotion.reduction > 0 and  date(produit.promotion.dateFin) >= date() and date(produit.promotion.dateDebut) <= date() %}
+									<div class="product__discount__percent">-{{produit.promotion.reduction}}%</div>
+								     {% endif %}
+									{% if produit.isBio %}
+										<div class="product__bio">Bio</div>
+									{% endif %}
+									<ul class="featured__item__pic__hover">
+										<li>
+											<a href="{{path('produit_like', {'id':produit.id})}}" class="heart-icon  js-like-produit">
+												{% if app.user  and  produit.isLikedByClient(app.user) %}
+													<i class="fa fa-heart " style="font-size:20px;color:red"></i>
+												{% else %}
+													<i class="fa fa-heart-o" style="font-size:20px;color:red"></i>
+												{% endif %}
+											</a>
+
+										</li>
+
+										<li>
+											<a class="shopping-produit" href="{{ path('cart_add', {'id': produit.id} )}}">
+												<i class="fa fa-shopping-cart"></i>
+											</a>
+										</li>
+									</ul>
+								</div>
+								<div class="featured__item__text">
+									<i class="fa fa-heart" style="font-size:20px;color:red"></i>
+									<span class="js-liks-produit{{produit.id}}">{{produit.recommedations | length}}</span>
+									<h6>
+										<a href="{{path('shop_details',{'id':produit.id})}}">{{produit.libelle}}</a>
+									</h6>
+									 {% if produit.promotion.reduction >0 and  date(produit.promotion.dateFin) >= date() and date(produit.promotion.dateDebut) <= date() %}
+									<div class="product__item__price">{{ produit.prixUnitaire - produit.prixUnitaire*(produit.promotion.reduction/100) }}MAD
+											<span class="product__item__price__origin">{{ produit.prixUnitaire }}MAD</span>
+									</div>
+								   {% else %}
+									<div class="product__item__price">
+										{{ produit.prixUnitaire }}MAD  
+									</div>
+								    {% endif %}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% endfor %}
+
+			</div>
+		</div>
+	</section>
+	<!-- Featured Section End -->
+
+	<!-- Banner Begin -->
+	<div class="banner">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-6">
+					<div class="banner__pic">
+						<img src="img/banner/banner-1.jpg" alt="">
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6">
+					<div class="banner__pic">
+						<img src="img/banner/banner-2.jpg" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Banner End -->
+
+	<!-- Latest Product Section Begin -->
+	<section class="latest-product spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-6">
+					<div class="latest-product__text">
+						<h4>Derniers produits</h4>
+						<div class="latest-product__slider owl-carousel">
+							<div class="latest-prdouct__slider__item">
+								{% if derniersProduits | length ==1 %}
+									{% for produit in derniersProduits  %}
+										<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+											<div class="latest-product__item__pic">
+												<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+											</div>
+											<div class="latest-product__item__text">
+												<h6>{{produit.libelle}}</h6>
+												<span>{{produit.prixUnitaire}}DH</span>
+											</div>
+										</a>
+									{% endfor %}
+								{% else  %}
+									{% if derniersProduits | length ==3 %}
+										{% for produit in derniersProduits  %}
+											<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+												<div class="latest-product__item__pic">
+													<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+												</div>
+												<div class="latest-product__item__text">
+													<h6>{{produit.libelle}}</h6>
+													<span>{{produit.prixUnitaire}}DH</span>
+												</div>
+											</a>
+										{% endfor %}
+									{% else %}
+										{% set i = 1 %}
+										{% for produit in derniersProduits  %}
+											{% if i <= (derniersProduits | length) /2 %}
+												<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+													<div class="latest-product__item__pic">
+														<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+													</div>
+													<div class="latest-product__item__text">
+														<h6>{{produit.libelle}}</h6>
+														<span>{{produit.prixUnitaire}}DH</span>
+													</div>
+												</a>
+												{% set i = i + 1 %}
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								{% endif %}
+							</div>
+							<div class="latest-prdouct__slider__item">
+								{% if derniersProduits | length ==1 %}
+									{% for produit in derniersProduits  %}
+										<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+											<div class="latest-product__item__pic">
+												<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+											</div>
+											<div class="latest-product__item__text">
+												<h6>{{produit.libelle}}</h6>
+												<span>{{produit.prixUnitaire}}DH</span>
+											</div>
+										</a>
+									{% endfor %}
+								{% else  %}
+									{% if derniersProduits | length ==3 %}
+										{% for produit in derniersProduits  %}
+
+											<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+												<div class="latest-product__item__pic">
+													<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+												</div>
+												<div class="latest-product__item__text">
+													<h6>{{produit.libelle}}</h6>
+													<span>{{produit.prixUnitaire}}DH</span>
+												</div>
+											</a>
+										{% endfor %}
+									{% else %}
+										{% set i = 1 %}
+										{% for produit in derniersProduits | reverse  %}
+											{% if i <= (derniersProduits | length) /2 %}
+												<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+													<div class="latest-product__item__pic">
+														<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+													</div>
+													<div class="latest-product__item__text">
+														<h6>{{produit.libelle}}</h6>
+														<span>{{produit.prixUnitaire}}DH</span>
+													</div>
+												</a>
+												{% set i = i + 1 %}
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="latest-product__text">
+						<h4>Produits les mieux notés</h4>
+						<div class="latest-product__slider owl-carousel">
+
+							<div class="latest-prdouct__slider__item">
+								{% if produitsMieuxNotes | length ==1 %}
+									{% for produit in produitsMieuxNotes  %}
+										<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+											<div class="latest-product__item__pic">
+												<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+											</div>
+											<div class="latest-product__item__text">
+												<h6>{{produit.libelle}}</h6>
+												<span>{{produit.prixUnitaire}}DH</span>
+											</div>
+										</a>
+									{% endfor %}
+								{% else  %}
+									{% if produitsMieuxNotes | length ==3 %}
+										{% for produit in produitsMieuxNotes  %}
+											<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+												<div class="latest-product__item__pic">
+													<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+												</div>
+												<div class="latest-product__item__text">
+													<h6>{{produit.libelle}}</h6>
+													<span>{{produit.prixUnitaire}}DH</span>
+												</div>
+											</a>
+										{% endfor %}
+									{% else %}
+										{% set i = 1 %}
+										{% for produit in produitsMieuxNotes  %}
+											{% if i <= (produitsMieuxNotes | length) /2 %}
+												<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+													<div class="latest-product__item__pic">
+														<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+													</div>
+													<div class="latest-product__item__text">
+														<h6>{{produit.libelle}}</h6>
+														<span>{{produit.prixUnitaire}}DH</span>
+													</div>
+												</a>
+												{% set i = i + 1 %}
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								{% endif %}
+							</div>
+							<div class="latest-prdouct__slider__item">
+								{% if produitsMieuxNotes | length ==1 %}
+									{% for produit in produitsMieuxNotes  %}
+										<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+											<div class="latest-product__item__pic">
+												<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+											</div>
+											<div class="latest-product__item__text">
+												<h6>{{produit.libelle}}</h6>
+												<span>{{produit.prixUnitaire}}DH</span>
+											</div>
+										</a>
+									{% endfor %}
+								{% else  %}
+									{% if produitsMieuxNotes | length ==3 %}
+										{% for produit in produitsMieuxNotes  %}
+
+											<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+												<div class="latest-product__item__pic">
+													<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+												</div>
+												<div class="latest-product__item__text">
+													<h6>{{produit.libelle}}</h6>
+													<span>{{produit.prixUnitaire}}DH</span>
+												</div>
+											</a>
+										{% endfor %}
+									{% else %}
+										{% set i = 1 %}
+										{% for produit in produitsMieuxNotes | reverse  %}
+											{% if i <= (produitsMieuxNotes | length) /2 %}
+												<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+													<div class="latest-product__item__pic">
+														<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+													</div>
+													<div class="latest-product__item__text">
+														<h6>{{produit.libelle}}</h6>
+														<span>{{produit.prixUnitaire}}DH</span>
+													</div>
+												</a>
+												{% set i = i + 1 %}
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="latest-product__text">
+						<h4>Produits bio</h4>
+						<div class="latest-product__slider owl-carousel">
+
+							<div class="latest-prdouct__slider__item">
+								{% if produitsBio | length ==1 %}
+									{% for produit in produitsBio  %}
+										<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+											<div class="latest-product__item__pic">
+												<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+											</div>
+											<div class="latest-product__item__text">
+												<h6>{{produit.libelle}}</h6>
+												<span>{{produit.prixUnitaire}}DH</span>
+											</div>
+										</a>
+									{% endfor %}
+								{% else  %}
+									{% if produitsBio | length ==3 %}
+										{% for produit in produitsBio  %}
+											<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+												<div class="latest-product__item__pic">
+													<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+												</div>
+												<div class="latest-product__item__text">
+													<h6>{{produit.libelle}}</h6>
+													<span>{{produit.prixUnitaire}}DH</span>
+												</div>
+											</a>
+										{% endfor %}
+									{% else %}
+										{% set i = 1 %}
+										{% for produit in produitsBio  %}
+											{% if i <= (produitsBio | length) /2 %}
+												<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+													<div class="latest-product__item__pic">
+														<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+													</div>
+													<div class="latest-product__item__text">
+														<h6>{{produit.libelle}}</h6>
+														<span>{{produit.prixUnitaire}}DH</span>
+													</div>
+												</a>
+												{% set i = i + 1 %}
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								{% endif %}
+							</div>
+							<div class="latest-prdouct__slider__item">
+								{% if produitsBio | length ==1 %}
+									{% for produit in produitsBio  %}
+										<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+											<div class="latest-product__item__pic">
+												<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+											</div>
+											<div class="latest-product__item__text">
+												<h6>{{produit.libelle}}</h6>
+												<span>{{produit.prixUnitaire}}DH</span>
+											</div>
+										</a>
+									{% endfor %}
+								{% else  %}
+									{% if produitsBio | length ==3 %}
+										{% for produit in produitsBio  %}
+
+											<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+												<div class="latest-product__item__pic">
+													<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+												</div>
+												<div class="latest-product__item__text">
+													<h6>{{produit.libelle}}</h6>
+													<span>{{produit.prixUnitaire}}DH</span>
+												</div>
+											</a>
+										{% endfor %}
+									{% else %}
+										{% set i = 1 %}
+										{% for produit in produitsBio | reverse  %}
+											{% if i <= (produitsBio | length) /2 %}
+												<a href="{{path('shop_details',{'id':produit.id})}}" class="latest-product__item">
+													<div class="latest-product__item__pic">
+														<img style=" width:90px;height:90px ;" src="{{asset(produit.image)}}" alt="">
+													</div>
+													<div class="latest-product__item__text">
+														<h6>{{produit.libelle}}</h6>
+														<span>{{produit.prixUnitaire}}DH</span>
+													</div>
+												</a>
+												{% set i = i + 1 %}
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Latest Product Section End -->
+
+		<!-- Blog Section Begin -->
+		<section class="from-blog spad">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="section-title from-blog__title">
+							<h2>Du blog</h2>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+				{% if bestBlogs is empty %}
+				   <div class="alert alert-info" role="alert">
+					   <strong>Aucun blog pour le moment </strong>
+				   </div>
+				 {% endif %}
+				 {% for blog in bestBlogs  %}
+					<div class="col-lg-4 col-md-4 col-sm-6">
+						<div class="blog__item">
+							<div class="blog__item__pic">
+								<img  style=" width:100px;height:230px ;"  src="{{ asset(blog.image) }}" alt="">
+							</div>
+							<div class="blog__item__text">
+								<ul>
+									<li>
+										<i class="fa fa-calendar-o"></i>
+												{{blog.createdAt | date()}}
+									<li>
+										<i class="fa fa-comment-o"></i>
+										{{blog.commentairesBlog | length}}</li>
+								</ul>
+								<h5>
+								<a href="{{path('blog_details',{'id':blog.id})}}" >{{blog.title}}
+								</h5>
+								<p>{{ blog.content |length > 100 ? blog.content| striptags  |slice(0, 100) ~ '   ...': blog.content | striptags  }}
+								</p>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+		<!-- Blog Section End -->
+	{% endblock %}
+	{% block javascripts %}
+		<script src="{{asset('js/shoping-grid-ajax.js')}}"></script>
+		<script src="{{asset('js/like.js')}}"></script>
+		<script src="{{asset('js/subscribers-ajax.js')}}"></script>
+	{% endblock %}

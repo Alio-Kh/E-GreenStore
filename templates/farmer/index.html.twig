@@ -1,0 +1,406 @@
+{% extends 'base_farmer.html.twig' %}
+
+
+{% block bodyFarmer %}
+	<!-- ### $App Screen Content ### -->
+	<main class='main-content bgc-grey-100'>
+		<div id='mainContent'>
+			<div class="row gap-20 masonry pos-r">
+				<div class="masonry-sizer col-md-6"></div>
+				<div class="masonry-item  w-100">
+					<div class="row gap-20">
+						<div class='col-md-4'>
+							<div class="layers bd bgc-white p-20">
+								<div class="layer w-100 mB-10">
+									<h6 class="lh-1">chiffre d'affaire
+									</h6>
+								</div>
+								<div class="layer w-100">
+									<div class="peers ai-sb fxw-nw">
+										<div class="peer peer-greed">
+											<span>
+												prix au maroc
+											</span>
+										</div>
+										<div class="peer">
+											<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">0{{ca.0.ca}}DH</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class='col-md-4'>
+							<div class="layers bd bgc-white p-20">
+								<div class="layer w-100 mB-10">
+									<h6 class="lh-1">J'adores
+									</h6>
+								</div>
+								<div class="layer w-100">
+									<div class="peers ai-sb fxw-nw">
+										<div class="peer peer-greed">
+											<span>
+												Nombre de j'adores</span>
+										</div>
+										<div class="peer">
+											<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">{{nbrJ}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class='col-md-4'>
+							<div class="layers bd bgc-white p-20">
+								<div class="layer w-100 mB-10">
+									<h6 class="lh-1">commentaires</h6>
+								</div>
+								<div class="layer w-100">
+									<div class="peers ai-sb fxw-nw">
+										<div class="peer peer-greed">
+											<span>Nombre de commentaires
+											</span>
+										</div>
+										<div class="peer">
+											<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">{{nbrC}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div id='mainContent'>
+			<div class="row gap-20 masonry pos-r">
+				<div
+					class="masonry-item col-md-12">
+					<!-- #Todo ==================== -->
+					<div class="bd bgc-white p-20">
+						<div class="layers">
+							<div class="layer w-100 mB-10">
+								<h6 class="lh-1 text-info">Vos produits n'ont jamais  été vendus</h6>
+							</div>
+							<div class="layer w-100">
+								<div class="row">
+									{% if produitsNonVendu is empty %}
+										<div class="alert alert-info" role="alert">
+											<strong>Aucune produit
+											</strong>
+										</div>
+									{% endif %}
+									{% for produit in produitsNonVendu %}
+										<div class='col-md-12'>
+											<div class="layers bd bgc-white p-20">
+												<div class="layer w-100 mB-10">
+													<a href="{{path('details_product',{'id':produit.id})}}">
+														<h6 class="lh-1">Libelle :
+															{{produit.libelle}}</h6>
+													</a>
+												</div>
+												<div class="layer w-100">
+													<div class="peers ai-sb fxw-nw">
+														<div class="peer peer-greed">
+															<small>La date à laquelle le produit a été ajouté à la plateforme:</small>
+														</div>
+														<div class="peer">
+															<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">{{produit.dateAjout | date('Y-m-d')}}</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div
+					class="masonry-item col-md-12">
+					<!-- #Monthly Stats ==================== -->
+					<div class="bd bgc-white">
+						<div class="layers">
+							<div class="layer w-100 pX-20 pT-20">
+								<h6 class="lh-1 text-info">
+									Pourcentage de ventes aujourd'hui selon chaque catégorie</h6>
+							</div>
+							<div class="layer bdT p-20 w-100">
+								<div class="row">
+									{% if ventesAujourdhui is empty %}
+										<div class="alert alert-info" role="alert">
+											<strong>Aucune vente aujourd'hui
+											</strong>
+										</div>
+									{% endif %}
+									{% for vente in ventesAujourdhui %}
+										<div class='col-md-12'>
+											<div class="layers bd bgc-white p-20">
+												<div class="layer w-100 mB-10">
+													<h6 class="lh-1">{{vente.0.libelle}}</h6>
+												</div>
+												<div class="layer w-100">
+													<div class="peers ai-sb fxw-nw">
+														<div class="peer peer-greed"></div>
+														<div class="peer">
+															<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">{{(vente.nbrVentes/totaleVentes)*100}}%</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row d-flex justify-content-center mt-5">
+			<div class="col-md-6 ">
+				<style type="text/css">
+					@import url(https://fonts.googleapis.com/css?family=Roboto:400,300);
+					{
+						# html,
+						body {
+							background-color: #F3F3F3;
+							font-family: 'Roboto', sans-serif;
+						} #
+					}
+
+					.card {
+						margin: 5% auto 0;
+						padding: 5px 30px;
+						height: 470px;
+						border-radius: 3px;
+						background-color: #fff;
+						box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.2);
+						-webkit-animation: open 2s cubic-bezier(0.39, 0, 0.38, 1);
+					}
+
+					@-webkit-keyframes open {
+						from {
+							padding: 0 30px;
+							height: 0;
+						}
+						to {
+							height: 470px;
+						}
+					}
+
+					h1,
+					h2,
+					h3,
+					h4 {
+						position: relative;
+					}
+
+					.dot {
+						font-size: 0.9em;
+					}
+
+					.sky {
+						position: relative;
+						margin-top: 108px;
+						width: 100px;
+						height: 100px;
+						border-radius: 50%;
+						background-color: #03A9F4;
+						-webkit-animation: up 2s cubic-bezier(0.39, 0, 0.38, 1) 0.2s;
+					}
+
+					.sun {
+						position: relative;
+						top: -3px;
+						width: 55px;
+						height: 55px;
+						border-radius: 50%;
+						background-color: #FFEB3B;
+						-webkit-animation: up 2s cubic-bezier(0.39, 0, 0.38, 1) 0.5s;
+					}
+
+					.cloud {
+						position: absolute;
+						top: 60px;
+						left: 30px;
+						-webkit-animation: up 2s cubic-bezier(0.39, 0, 0.38, 1) 0.7s;
+					}
+
+					.cloud:before,
+					.cloud:after {
+						position: absolute;
+						display: block;
+						content: "";
+					}
+
+					.cloud:before {
+						margin-left: -10px;
+						width: 51px;
+						height: 18px;
+						background: #fff;
+					}
+
+					.cloud:after {
+						position: absolute;
+						top: -10px;
+						left: -22px;
+						width: 28px;
+						height: 28px;
+						border-radius: 50%;
+						background: #fff;
+						box-shadow: 50px -6px 0 6px #fff, 25px -19px 0 10px #fff;
+					}
+
+					table {
+						position: relative;
+						top: 10px;
+						width: 100%;
+						text-align: center;
+					}
+
+					tr:nth-child(1) td:nth-child(1),
+					tr:nth-child(1) td:nth-child(2),
+					tr:nth-child(1) td:nth-child(3),
+					tr:nth-child(1) td:nth-child(4),
+					tr:nth-child(1) td:nth-child(5) {
+						padding-bottom: 32px;
+						-webkit-animation: up 2s cubic-bezier(0.39, 0, 0.38, 1) 0.7s;
+					}
+
+					tr:nth-child(2) td:nth-child(1),
+					tr:nth-child(2) td:nth-child(2),
+					tr:nth-child(2) td:nth-child(3),
+					tr:nth-child(2) td:nth-child(4),
+					tr:nth-child(2) td:nth-child(5) {
+						padding-bottom: 7px;
+						-webkit-animation: up 2s cubic-bezier(0.39, 0, 0.38, 1) 0.9s;
+					}
+
+					tr:nth-child(3) td:nth-child(1),
+					tr:nth-child(3) td:nth-child(2),
+					tr:nth-child(3) td:nth-child(3),
+					tr:nth-child(3) td:nth-child(4),
+					tr:nth-child(3) td:nth-child(5) {
+						padding-bottom: 7px;
+						-webkit-animation: up 2s cubic-bezier(0.39, 0, 0.38, 1) 0.9s;
+					}
+
+					tr:nth-child(2),
+					tr:nth-child(3) {
+						font-size: 0.9em;
+					}
+
+					tr:nth-child(3) {
+						color: #999;
+					}
+
+					@-webkit-keyframes up {
+						0% {
+							opacity: 0;
+							-webkit-transform: translateY(15px);
+						}
+						50% {
+							opacity: 0;
+							-webkit-transform: translateY(15px);
+						}
+						99% {
+							-webkit-animation-play-state: paused;
+						}
+						100% {
+							opacity: 1;
+						}
+					}
+				</style>
+				<div class="d-flex justify-content-center">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-lg-6">
+								<div class="section_title text-center mb_70">
+									<h3>La météo</h3>
+								</div>
+							</div>
+						</div>
+						<div class="row ">
+							<div class="col-lg-12">
+								<div class="card ">
+									<h2 style="font-weight: 300; font-size: 2.25em; -webkit-animation: up 2s cubic-bezier(0.39, 0, 0.38, 1); ">{{ville.libelle}}</h2>
+									<h3 id="day0" style="float: right; left: 240px; top: -47px; color: #777; font-weight: 400; font-size: 1em; -webkit-animation: up 2s cubic-bezier(0.39, 0, 0.38, 1) 0.1s;"></h3>
+									<h3 style="float: left; margin-right: 33px; top: 0px; color: #777; font-weight: 400; font-size: 1em; -webkit-animation: up 2s cubic-bezier(0.39, 0, 0.38, 1) 0.1s;" id="desc"></h3>
+									<h1 id="temp" style="float: right; color: #666; font-weight: 300; top: 32px; font-size: 6.59375em; line-height: 0.2em; -webkit-animation: up 2s cubic-bezier(0.39, 0, 0.38, 1) 0.2s;">&deg;</h1>
+									<div id="sky"></div>
+									<table>
+										<tr>
+											<td id="day1"></td>
+											<td id="day2"></td>
+											<td id="day3"></td>
+											<td id="day4"></td>
+											<td id="day5"></td>
+										</tr>
+										<tr>
+											<td id="icond1"></td>
+											<td id="icond2"></td>
+											<td id="icond3"></td>
+											<td id="icond4"></td>
+											<td id="icond5"></td>
+										</tr>
+										<tr>
+											<td id="tempMaxd1"></td>
+											<td id="tempMaxd2"></td>
+											<td id="tempMaxd3"></td>
+											<td id="tempMaxd4"></td>
+											<td id="tempMaxd5"></td>
+										</tr>
+										<tr>
+											<td id="tempMind1"></td>
+											<td id="tempMind2"></td>
+											<td id="tempMind3"></td>
+											<td id="tempMind4"></td>
+											<td id="tempMind5"></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<script>
+					var lat = {{ville.lat}};
+                    var lng ={{ville.lng}};
+
+              fetch('https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lng + '&units=metric&appid=7215d0713dbd93f757a51b198da702cc').then(response => response.json()).then(data => {
+              console.log(data);
+              document.getElementById("temp").innerHTML = data.current.temp + '&deg;';
+              document.getElementById("sky").innerHTML = '<img src=' + '{{ asset("img/weather/") }}' + data.daily[0].weather[0].icon + '.png' + '>';
+              document.getElementById("desc").innerHTML = data.current.weather[0].description + '<span  id="wind" style="margin-left: 24px; color: #999; font-weight: 300;">Vent ' + data.current.wind_speed + 'm/s <span style="margin-left: 0;" class="dot">•</span> humidité ' + data.current.humidity + '%</span>';
+              var date0 = new Date();
+              let dateLocale0 = date0.toLocaleString('fr-FR', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+              });
+              document.getElementById("day0").innerHTML = dateLocale0;
+              for (var i = 1; i < 6; i++) {
+              document.getElementById("tempMaxd" + i).innerHTML = data.daily[i].temp.max + '&deg;';
+              document.getElementById("icond" + i).innerHTML = '<img style="width: 65px" src=' +'{{ asset("img/weather/") }}' + data.daily[i].weather[0].icon + '.png' + '>';
+              document.getElementById("tempMind" + i).innerHTML = data.daily[i].temp.min + '&deg;';
+              var date = new Date();
+              date.setDate(new Date().getDate() + i);
+              let dateLocale = date.toLocaleString('fr-FR', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+              });
+              document.getElementById("day" + i).innerHTML = dateLocale.substr(0, 3).toUpperCase();
+
+              }
+
+              });
+				</script>
+			</div>
+		</div>
+		</div>
+	</main>
+{%  endblock  %}

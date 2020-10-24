@@ -1,0 +1,950 @@
+easy_admin:
+    design:
+        menu:
+            - {label: "Elements"}
+            - label: "Comptes __    "
+              children: 
+                - {entity: CompteClient } 
+                - {entity: CompteAgriculteur } 
+                - {entity: CompteAdmin }                
+            - label: "Informations des utilisateurs    "
+              children: 
+                - {entity: Agriculteur } 
+                - {entity: Client } 
+                - {entity: Admin } 
+             
+            - label: "Les marchés des agriculteurs    "
+              children: 
+                - {entity: Market,label: "List des marchés" , icon: "th-list" } 
+                 #- {entity: Market ,label: "Editer un marché" , icon: "pencil", params: {action: 'edit' }} 
+                 #- {entity: Market ,label: "Supprimer un marché" , icon: "trash", params: {action: 'delete' }} 
+            
+            - label: "Les produits des agriculteurs "
+              children: 
+                - {entity: Produit ,label: 'List des produits' , icon: "th-list" } 
+                 #- {entity: Produit ,label: "Editer un produit" , icon: "pencil", params: {action: 'edit' }} 
+                #- {entity: Produit ,label: "Supprimer un produit" , icon: "trash", params: {action: 'delete' }} 
+            
+
+            - label: "Les promotions   "
+              children: 
+                - {entity: Promotion ,label: 'List des promotions', icon: "th-list" } 
+                - {entity: Promotion ,label: "nouvelle promotion" , icon: "plus", params: {action: 'new' }} 
+                  #- {entity: Produit ,label: "Editer un produit" , icon: "pencil", params: {action: 'edit' }} 
+                  #- {entity: Produit ,label: "Supprimer un produit" , icon: "trash", params: {action: 'delete' }} 
+            
+            
+            - label: "Tva "
+              children: 
+                - {entity: Tva, label: 'List des Tva' , icon: "th-list" } 
+                - {entity: Tva ,label: "nouvelle tva" , icon: "plus", params: {action: 'new' }} 
+              #- {entity: Produit ,label: "Editer un produit" , icon: "pencil", params: {action: 'edit' }} 
+              #- {entity: Produit ,label: "Supprimer un produit" , icon: "trash", params: {action: 'delete' }} 
+                     
+
+
+
+            
+            - label: "Les commentaires   "
+              children: 
+                - {entity: Commentaire ,label: 'List des commentaires', icon: "th-list" } 
+                #- {entity: Produit ,label: "Editer un produit" , icon: "pencil", params: {action: 'edit' }} 
+                #- {entity: Produit ,label: "Supprimer un produit" , icon: "trash", params: {action: 'delete' }} 
+            
+            - label: "Les blogs   "
+              children: 
+                - {entity: Blog ,label: "List des blogs", icon: "th-list" } 
+                - {entity: Blog ,label: "nouveau blog" , icon: "plus", params: {action: 'new' }} 
+                  #- {entity: Produit ,label: "Editer un produit" , icon: "pencil", params: {action: 'edit' }} 
+                  #- {entity: Produit ,label: "Supprimer un produit" , icon: "trash", params: {action: 'delete' }} 
+            - label: "Les tags   "
+              children: 
+                - {entity: Tag ,label: "List des tags", icon: "th-list" } 
+                - {entity: Tag ,label: "nouveau tag" , icon: "plus", params: {action: 'new' }} 
+                      #- {entity: Produit ,label: "Editer un produit" , icon: "pencil", params: {action: 'edit' }} 
+                      #- {entity: Produit ,label: "Supprimer un produit" , icon: "trash", params: {action: 'delete' }} 
+            
+            - label: "Les commantaire des blogs   "
+              children: 
+                - {entity: CommentaireBlog,label: "List des commentaires" , icon: "th-list" } 
+                #- {entity: Produit ,label: "Editer un produit" , icon: "pencil", params: {action: 'edit' }} 
+                #- {entity: Produit ,label: "Supprimer un produit" , icon: "trash", params: {action: 'delete' }} 
+                           
+                
+            - label: "Les catégories des produits "
+              children: 
+                - {entity: Categorie, label: "List des catégorie", icon: "th-list" } 
+                - {entity: Categorie ,label: "nouvelle catégorie" , icon:  "plus", params: {action: 'new' }} 
+                #- {entity: Categorie ,label: "Editer une catégorie" , icon: "pencil", params: {action: 'edit' }} 
+                #- {entity: Categorie ,label: "Supprimer une catégorie" , icon: "trash", params: {action: 'delete' }} 
+            
+            - label: "Lignes de commandes   "
+              children: 
+                - {entity: LigneCommande , label: "List des lignes des commandes", icon: "th-list" } 
+                 #- {entity: Produit ,label: "Editer un produit" , icon: "pencil", params: {action: 'edit' }} 
+                  #- {entity: Produit ,label: "Supprimer un produit" , icon: "trash", params: {action: 'delete' }} 
+              
+          
+            - label: "Les commandes    "
+              children: 
+                - {entity: Commande ,label: "List des commandes", icon: "th-list" } 
+                #- {entity: Commande ,label: "Editer une commande" , icon: "pencil", params: {action: 'edit' }} 
+                #- {entity: Commande ,label: "Supprimer une commande" , icon: "trash", params: {action: 'delete' }} 
+            
+
+                
+            - label: "Les factures    "
+              children: 
+                - {entity: Facture, label: 'List des factures' , icon: "th-list"} 
+                #- {entity: Facture ,label: "Editer une facture" , icon: "pencil", params: {action: 'edit' }} 
+                #- {entity: Facture ,label: "Supprimer une facture" , icon: "trash", params: {action: 'delete' }} 
+           
+           
+            - label: "Les ventes   "
+              children: 
+                - {entity: Vente , label: "List des ventes", icon: "th-list" } 
+               #- {entity: Produit ,label: "Editer un produit" , icon: "pencil", params: {action: 'edit' }} 
+                #- {entity: Produit ,label: "Supprimer un produit" , icon: "trash", params: {action: 'delete' }} 
+            
+            - label: "Les paiements   "
+              children: 
+                - {entity: Paiement , label: "List des paiements", icon: "th-list" } 
+                #- {entity: Produit ,label: "Editer un produit" , icon: "pencil", params: {action: 'edit' }} 
+                #- {entity: Produit ,label: "Supprimer un produit" , icon: "trash", params: {action: 'delete' }} 
+                       
+             
+            - label: " Les cares bancaires "
+              children: 
+                - {entity: CarteBancaire , label: "List des cartes bancaires", icon: "th-list" } 
+                  #- {entity: Produit ,label: "Editer un produit" , icon: "pencil", params: {action: 'edit' }} 
+                  #- {entity: Produit ,label: "Supprimer un produit" , icon: "trash", params: {action: 'delete' }} 
+
+
+
+            - label: " Les types de livraisons "
+              children: 
+                - {entity: TypeLivraison , label: "Les types des livraisons" , icon: "th-list" } 
+                #- {entity: Produit ,label: "Editer un produit" , icon: "pencil", params: {action: 'edit' }} 
+                #- {entity: Produit ,label: "Supprimer un produit" , icon: "trash", params: {action: 'delete' }} 
+                            
+            - label: "Les livraisons "
+              children: 
+                - {entity: Livraison, label: "List des livraison" , icon: "th-list" } 
+                - {entity: Livraison ,label: "Nouvelle livraison" , icon: "plus", params: {action: 'new' }} 
+                  #- {entity: Produit ,label: "Editer un produit" , icon: "pencil", params: {action: 'edit' }} 
+                  #- {entity: Produit ,label: "Supprimer un produit" , icon: "trash", params: {action: 'delete' }} 
+                     
+            
+            - label: "Les régions    "
+              children: 
+                - {entity: Region, label: "List des régions"  , icon: "th-list" }
+                - {entity: Region ,label: "nouvelle région" , icon: "plus", params: {action: 'new' }} 
+                #- {entity: Region ,label: "Editer une région" , icon: "pencil", params: {action: 'edit' }} 
+                #- {entity: Market ,label: "Supprimer une région" , icon: "trash", params: {action: 'delete' }} 
+            
+              
+            - label: "Les provinces    "
+              children: 
+                - {entity: Ville  ,label: "List les provinces", icon: "th-list"}
+                - {entity: Ville ,label: "nouvelle ville" , icon: "plus", params: {action: 'new' }} 
+                #- {entity: Ville ,label: "Editer une ville" , icon: "pencil", params: {action: 'edit' }} 
+                #- {entity: Ville ,label: "Supprimer une ville" , icon: "trash", params: {action: 'delete' }} 
+            
+              
+  
+            - label: "Les communes    "
+              children: 
+                - {entity: Commune ,label: "List des communes", icon: "th-list"} 
+                - {entity: Commune ,label: "nouvelle commune" , icon: "plus", params: {action: 'new' }} 
+                #- {entity: Commune ,label: "Editer une commune" , icon: "pencil", params: {action: 'edit' }} 
+                #- {entity: Commune ,label: "Supprimer une commune" , icon: "trash", params: {action: 'delete' }} 
+                
+            - label: "Les abonnés    "
+              children: 
+                - {entity: Subscribers, label: "List des abonnés" , icon: "th-list"} 
+                - {entity: Subscribers ,label: "nouvelle abonné" , icon: "plus", params: {action: 'new' }} 
+                  #- {entity: Commune ,label: "Editer une commune" , icon: "pencil", params: {action: 'edit' }} 
+                  #- {entity: Commune ,label: "Supprimer une commune" , icon: "trash", params: {action: 'delete' }} 
+              
+                
+                
+    site_name: 'Gestion du site'
+    entities:
+        # List the entity class name you want to manage
+        
+        CompteClient:
+            class: App\Entity\User
+            label: 'Comptes client'
+            
+            list:
+                title: "les comptes des client"
+                dql_filter: " entity.client !='null' "
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['client','email'] 
+                fields: ['id', 'client', 'email']
+            form:
+                title: "Editer"
+                fields: [ 'client', 'email']
+            show: 
+                title: " Le compte de ce client"
+
+        CompteAgriculteur:
+            class: App\Entity\User
+            label: 'Comptes agriculteur'
+            list:
+                title: "les comptes des agriculteurs"
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['agriculteur','email'] 
+                dql_filter: " entity.agriculteur !='null' "
+                fields: ['id', 'agriculteur', 'email']
+            form:
+                title: "Editer"
+                fields: [ 'agriculteur', 'email']
+            show: 
+                title: " Le compte de ce agriculteur"
+                fields: ['id', 'agriculteur', 'email']
+
+        CompteAdmin:
+            class: App\Entity\User
+            label: 'Comptes admin'
+            title: "les comptes des client"
+           
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['admin','email']   
+                dql_filter: " entity.admin !='null' "
+                fields: ['id', 'admin', 'email']
+            form:
+                title: "Editer"
+                fields: [ 'admin', 'email']
+            show: 
+                title: " Le compte de cet admin"
+                fields: ['id', 'admin', 'email']
+    
+        
+        Agriculteur:
+            class: App\Entity\Agriculteur
+            label: 'Agriculteurs'            
+            list:   
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['reference','cin','nom','prenom'] 
+                fields: ['id','reference', 'cin', 'nom', 'prenom', 'tele']
+            form:  
+                title: "Editer"
+                fields: ['reference', 'cin', 'nom', 'prenom', 'tele', 'markets', commune]
+            edit: 
+                fields: ['cin', 'nom', 'prenom', 'tele', 'markets', commune]
+            show: 
+                title: " Le compte de cet agriculteur"
+                fields: ['reference', 'cin', 'nom', 'prenom', 'tele', 'markets', 'commune']
+                
+
+        Client:
+            class: App\Entity\Client
+            label: ' Clients'
+            
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['nom','prenom', 'reference'] 
+                title: "List des clients" 
+                fields: ['id','reference', 'nom', 'prenom', 'tele', 'adresse']
+            edit: 
+                title: "Editer"
+                fields: [ 'nom', 'prenom', 'tele', 'adresse', 'commandes', 'recommedations','carteBancaires']
+            show: 
+                title: "Les informations du client" 
+                fields: ['reference',  'nom', 'prenom', 'tele', 'adresse', 'commandes', 'recommedations','carteBancaires']
+                
+
+
+        Admin:
+            class: App\Entity\Admin
+            label: 'admins'
+           
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['nom','prenom'] 
+                title: "Les informations des client"
+                fields: ['id','nom', 'prenom', 'tele', 'adresse']
+            form:  
+                title: "Editer"
+                fields: ['nom', 'prenom', 'tele', 'adresse']
+            show: 
+                title: " Le compte de cet admin"
+                fields: ['id', 'nom', 'prenom', 'tele','adresse']
+                    
+  
+
+        Market:
+            class: App\Entity\Market
+            label: 'Les marchés'
+            disabled_actions: ['new']
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['libelle','agriculteur']  
+                title: "List des marchés "
+                fields: 
+                    - id
+                    - libelle 
+                    - { property: 'image', type: 'image'}
+                    - {property: 'description', type: 'raw'}
+                    - produits
+                    - agriculteur
+            form: 
+                title: "Ajouter un marché"
+                fields:
+                    - { type: "group", icon: "Market", label: "Informatios" , css_class: 'col-lg-7' } 
+                    - libelle  
+                    - {property: 'description', type: 'text_editor'}
+                    - agriculteur
+                    - { type: "group", icon: "upload", label: "Télécharger", css_class: 'col-lg-5' }
+                    - {property: 'imageFile', type: 'vich_image', label: "Image"}
+            edit: 
+                title: "Editer ce marché"
+            show:
+                title: "Détails"
+                fields: 
+                    - id
+                    - libelle 
+                    - { property: 'image', type: 'image'}
+                    - {property: 'description', type: 'raw'}
+                    - produits
+                    - agriculteur
+
+
+                      
+
+                        
+        Produit:
+            class: App\Entity\Produit
+            label: ' Produits'
+            disabled_actions: ['new']
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: [ 'delete']
+                filters: ['libelle', 'prixUnitaire', 'stock', 'market', 'tva', 'isBio']  
+                title: "List des produits "
+                fields: 
+                    - id 
+                    - libelle
+                    - prixUnitaire
+                    - stock  
+                    - { property: 'image', type: 'image'}
+                    - dateAjout
+                    - dateProduction
+                    - updatedAt
+                    - {property: 'description', type: 'raw'}
+                    - { property: 'isBio', type: 'toggle' } 
+                    - information
+                    - market
+                    - tva 
+            form:
+                title: "Ajouter un produit"
+                fields:
+                    - {type: 'group', icon: 'pencil', label : 'Informations', css_class: 'col-lg-7'  }            
+                    - libelle
+                    - prixUnitaire
+                    - promotion
+                    - unite
+                    - stock  
+                    - dateAjout
+                    - dateProduction
+                    - updatedAt
+                    - {property: 'description', type: 'text_editor'}
+                    - isBio
+                    - {property: 'information', type: 'text_editor'}
+                    - market
+                    - {type: 'group', icon: 'th-list', label : 'Autre informations', css_class: 'col-lg-5'  }                              
+                    - tva 
+                    - categorie
+                    - {type: 'group', icon: 'upload', label : 'téléchargements', css_class: 'col-lg-5'  }            
+                    - { property: 'imageFile', type: 'vich_image' , label: 'Ajouter une photo'  }
+            
+            edit:
+                title: "Editer ce produit"
+                
+            show: 
+                title: " Details"
+                fields:
+                    - libelle
+                    - prixUnitaire
+                    - promotion
+                    - unite
+                    - stock  
+                    - dateAjout
+                    - dateProduction
+                    - updatedAt
+                    - {property: 'description', type: 'raw'}
+                    - isBio
+                    - {property: 'information', type: 'raw'}
+                    - market
+                    - tva 
+                    - ventes
+                    - commentaires
+                    - recommedations
+                    - categorie
+                    - ligneCommandes
+                    - { property: 'image', type: 'image' }
+
+
+        Commentaire:
+            class: App\Entity\Commentaire
+            label: "commentaires"
+            disabled_actions: ['new']
+            list:
+                collapse_actions: false 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['client','produit']  
+                title: "List des commentaires "
+            form: 
+                title: "Ajouter un commantaire"
+            edit: 
+                title: "Editer ce commantaire"
+            show:
+                title: "Details"
+            
+
+                    
+
+
+
+        Categorie:
+            class: App\Entity\Categorie
+            label: 'Catégories'
+            list:
+                collapse_actions: false 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['libelle']  
+                title: "List des catégories "
+                fields:
+                    - id 
+                    - libelle
+                    - { property: 'image', type: 'image'  }
+                    - produits
+            form:
+                title: "Ajouter une catégorie "
+                fields:
+                    - {type: 'group', icon: 'pencil', label : 'Informations', css_class: 'col-lg-7'  }            
+                    - libelle
+                    - {type: 'group', icon: 'upload', label : 'téléchargements', css_class: 'col-lg-5'  }            
+                    - { property: 'imageFile', type: 'vich_image' , label: 'Ajouter une photo'  }
+            edit:
+                title: "Editer cette catégorie"  
+                
+            show:
+                title: "Détails" 
+                fields:
+                    - id 
+                    - libelle
+                    - { property: 'image', type: 'image'  }
+                    - produits   
+            
+             
+             
+        Blog:
+            class: App\Entity\Blog
+            label: 'blogs'
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['title', 'published', 'createdAt', 'categorie', 'tags']  
+                title: "List des Lignes de commandes "
+                fields:
+                    - id
+                    - title
+                    - admin
+                    - published
+                    - createdAt
+                    - categorie
+                    - { property: 'image', type: 'image'  }
+            form:
+                title: 'Ajouter un blog'
+                fields:
+                    - {type: 'group', icon: 'pencil', label : 'Informations', css_class: 'col-lg-7'  }            
+                    - title
+                    - admin
+                    - {property: 'content', type: 'text_editor'}                  
+                    - published
+                    - createdAt
+                    - categorie
+                    - {type: 'group', icon: 'pencil', label : 'Autres informations', css_class: 'col-lg-7'  }              
+                    - { property: 'tags', type_options: { 'by_reference': false , 'required': true} }
+                    - {type: 'group', icon: 'upload', label : 'téléchargements', css_class: 'col-lg-5'  }            
+                    - { property: 'imageFile', type: 'vich_image' , label: 'Ajouter une photo'  }
+            edit:
+                title: 'Editer ce blog'
+            show:
+                title: 'Détails'
+                fields:
+                    - title
+                    - admin
+                    - {property: 'content', type: 'raw'}
+                    - published
+                    - createdAt
+                    - categorie
+                    - tags 
+                    - {property: 'commentairesBlog', label: 'commantaires'}
+                   
+        
+        Tag: 
+            class: App\Entity\Tag
+            title: 'Tags'
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['name', 'blogs']  
+                title: "List des blogs"
+                fields:
+                    - id
+                    - name
+                    - blogs
+            form:
+                title: 'Ajouter un blog'
+                fields:
+                    - name
+            edit: 
+                title: 'Editer ce blog'
+            show: 
+                title: 'Détails'
+                fields:
+                    - id 
+                    - name
+                    - blogs
+        
+
+        CommentaireBlog:
+            class: App\Entity\CommentaireBlog
+            title: 'Commentaires des blogs'
+            disabled_actions: ['new']
+            list: 
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['user', 'blog']  
+                title: "List des blogs"
+                fields:
+                    - id
+                    - content
+                    - blog
+            show:
+                title: 'Détails'
+            edit: 
+                title: "Editer ce commentaire"
+                fields:
+                    - content
+                             
+        LigneCommande:
+            class: App\Entity\LigneCommande
+            label: " Lignes de commandes"
+            disabled_actions: ['new']
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['produit']  
+                title: "List des Lignes de commandes "
+            form: 
+                title: " Ajouter une ligne de commande"  
+                fields:
+                    - '-id' 
+            edit: 
+                title: " Editer cettle ligne de commande" 
+                fields:
+                    - '-id'
+            show: 
+                title: " Détails"
+
+
+
+
+        Commande:
+            class: App\Entity\Commande
+            label: ' Commandes'
+            disabled_actions: ['new']
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['reference', 'total']  
+                title: "Commandes "
+                fields:
+                    - id 
+                    - reference
+                    - client
+                    - ligneCommandes
+                    - total
+            form: 
+                title: "Ajouter une commande"
+                fields:
+                    - reference
+                    - client
+                    - total
+            edit: 
+                title: "Editer cette commande"
+                fields:
+                    - '-id'
+                    - '-reference'
+            show:
+                title: "Détails"
+
+        Facture:
+            class: App\Entity\Facture
+            label: 'Factures'
+            disabled_actions: ['new']
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['reference', 'dateCreation', 'commande']  
+                title: "List des factures "
+            form: 
+                title: "Ajouter une factue"
+            edit: 
+                title: " Editer cette facture"
+                fields: 
+                    - '-reference'         
+            show:
+                title: "Détails"
+
+        
+        Promotion:
+            class: App\Entity\Promotion
+            label: "Promotions"
+            disabled_actions: ['edit']
+            list:
+                collapse_actions: false 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['dateDebut', 'dateFin','reduction']  
+                title: "Catégories "
+            form:
+                title: " ajouter une promotion"
+                fields:
+                    - { property: 'dateDebut', type_options: { required: true } }
+                    -  { property: 'dateFin', type_options: { required: true } }
+                    - { property: ' reduction ', type_options: { required: true } }
+            edit:
+                title: " Editer cette promotion"  
+            show:
+                title: "Détails"      
+
+                
+        Tva:
+            class: App\Entity\Tva
+            label: "Tva"
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['pourcentage']  
+                title: "List des tva "
+            form: 
+                title: "Ajouter un tva"    
+                fields:
+                    - pourcentage
+            edit:
+                title: "Editr cette tva" 
+            show:
+                title: "Détails"       
+
+        Vente:
+            class: App\Entity\Vente
+            label: "Ventes"
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['dateVente','qteVendu','prixVente','produit', 'reduction']  
+                title: "List des ventes "
+            form: 
+                title: "Ajouter une vente"
+            edit: 
+                title: "Editer cette vente"
+            show: 
+                title: "Détails"
+
+        
+        Paiement:
+            class: App\Entity\Paiement
+            label: "Paiements"
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['reference','facture']  
+                title: "List des paiements "
+            form:
+                title: "Ajouter un paiement"
+            edit:
+                title: "Editer ce paiement"
+            show: 
+                title: "Détails"
+            
+
+        CarteBancaire:
+            class: App\Entity\CarteBancaire
+            label: "CarteBancaires"
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['numroCarte','typeCarte']  
+                title:  "List des cartes bancaires" 
+            form:
+                title: "Ajouter un Paiement"
+                fields:
+                    - numroCarte
+                    - dateExpiration
+                    - typeCarte
+                    - client
+            edit:
+                title: "Editer cette carte"  
+            show:
+                title: " Détails"      
+        
+
+        TypeLivraison:
+            class: App\Entity\TypeLivraison
+            label: "Type de livraison" 
+            list:
+                title: "List des types"
+                collapse_actions: false 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['libelle', 'frais', 'duree', 'livraison']  
+                fields:
+                    - id
+                    - libelle    
+                    - frais
+                    - duree
+                    - livraison
+                    - {property: 'description', type: 'raw'}
+                    - {property: 'image', type: 'image'}
+                    
+            form:
+                title: "Ajouter un type"
+                fields:
+                    - {type: 'group', icon: 'pencil', label : 'Informations', css_class: 'col-lg-7'  }                                     
+                    - libelle
+                    - {property: 'description', type: 'text_editor'}
+                    - frais
+                    - duree
+                    - {type: 'group', icon: 'upload', label : 'téléchargements', css_class: 'col-lg-5'  }                       
+                    - {property: 'imageFile', type: 'vich_image', label: 'Ajouter une image'}
+                    
+            edit:
+                title: " Editer ce Type"
+            show:
+                title: "Details"    
+                    
+
+        Livraison:
+            class: App\Entity\Livraison
+            label: " Livraisons"   
+            disabled_actions: ['new']
+            list:
+                title: "List des livraisons"
+                collapse_actions: false 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['dateLivraison', 'adresse', 'commande', 'typeLivraison', 'livree'] 
+                fields:
+                    - id
+                    - dateLivraison
+                    - adresse
+                    - commande
+                    - typeLivraison
+                    - {property: 'livree', type: 'toggle'}
+            
+            form:
+                title: "Ajouter une Livraison"
+            Edit:
+                title: "Editer cette livraison"
+            show:
+                title: "Details"
+        
+
+
+        Region:
+            class: App\Entity\Region
+            label: ' Régions'
+            list:
+                collapse_actions: false 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['libelle']  
+               
+                title: "List des régions "
+                form:
+                    title: "Ajouter une région"
+                    fields:
+                        - libelle
+                edit:
+                    title: "Editer cette région"
+                show:
+                    title: "Détails"
+
+
+        Ville:
+            class: App\Entity\Ville
+            label: '  Villes'
+            list:
+                collapse_actions: false 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['libelle']  
+               
+                title: "List des villes "
+            form: 
+                title: " Ajouter une ville"
+                fields:
+                    - libelle
+                    - region
+            edit:
+                title: "Editer cette ville"
+            show:
+                title: "Détails"
+
+        
+        Commune:
+            class: App\Entity\Commune
+            label:  'Communes'
+            list:
+                collapse_actions: true 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['libelle', 'type', 'ville']  
+               
+                title: "List des communes "
+            form:
+                title: "Ajouter une commune"
+                fields:
+                    - libelle
+                    - type
+                    - ville
+            edit: 
+                title: "Editer cette commune"
+            show: 
+                title: "Détails"
+
+
+                
+        Subscribers:
+            class: App\Entity\Subscribers
+            label:  'Abonnées'
+            list:
+                collapse_actions: false 
+                actions: 
+                  - {name: 'show', label: 'Afficher', icon: "eye" }
+                  - {name: 'edit', label: 'Editer', icon: "pencil" }
+                  - {name: 'delete', label: 'Supprimer', icon: "trash"}
+                batch_actions: ['delete']
+                filters: ['email']  
+               
+                title: "List des abonnés "
+            form:
+                title: "Ajouter un abonné"
+                fields:
+                    - email
+            edit: 
+                title: "Editer cet abonné"
+            show: 
+                title: "Détails"
+                
+        

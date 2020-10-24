@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{controller_name}}
+{% endblock %}
+
+{% block body %}
+
+	<!-- Blog Details Hero Begin -->
+	<section class="blog-details-hero set-bg" data-setbg={{ asset('img/blog/details/details-hero.jpg') }}>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="blog__details__hero__text">
+						<h2>{{blog.title}}</h2>
+						<ul>
+							<li>Par
+								{{blog.admin.nom  }}
+								{{blog.admin.prenom}}</li>
+							<li>{{blog.createdAt | date() }}</li>
+							<li>{{blog.commentairesBlog | length}}
+								Commentaires</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Blog Details Hero End -->
+
+	<!-- Blog Details Section Begin -->
+	<section class="blog-details spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-5 order-md-1 order-2">
+					<div class="blog__sidebar">
+						<div class="blog__sidebar__search">
+							<form action="{{path('search_blog')}}">
+								<input type="text" name="query" id="search" placeholder="Rechercher...">
+								<button id="buttonSearch" type="submit">
+									<span class="icon_search"></span>
+								</button>
+							</form>
+						</div>
+						<div class="blog__sidebar__item">
+							<h4>Categories</h4>
+							<ul>
+								<li>
+									<a href="{{path('blog')}}">Toutes</a>
+								</li>
+								{% for categorie in categoriesBlog %}
+									<li>
+										<a href="{{path('category_blogs',{'id':categorie.id})}}">{{categorie.libelle}}
+										</a>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+						<div class="blog__sidebar__item">
+							<h4>Rechercher par</h4>
+							<div class="blog__sidebar__item__tags">
+								{% for tag in tags %}
+									<a href="{{path('tag_blogs',{'id':tag.id})}}">{{tag.name}}</a>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-8 col-md-7 order-md-1 order-1">
+					<div class="blog__details__text">
+						<img src="{{ asset(blog.image) }}" alt="">
+						<p>{{blog.content | raw}}</p>
+					</div>
+					<div class="blog__details__content">
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="blog__details__author">
+									<div class="blog__details__author__pic">
+										<img src={{asset('img/user.png')}} alt="">
+									</div>
+									<div class="blog__details__author__text">
+										<h6>{{blog.admin.nom  }}
+											{{blog.admin.prenom}}</h6>
+										<span>Admin</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<div class="blog__details__widget">
+									<ul>
+										<li>
+											<span>Categorie:</span>
+											{{blog.categorie.libelle}}</li>
+										<li>
+											<span>Tags:</span>
+											{% for tag in blog.tags %}
+												{{tag.name}},
+											{% endfor %}
+										</li>
+									</ul>
+									<div class="blog__details__social">
+										<a href="#">
+											<i class="fa fa-facebook"></i>
+										</a>
+										<a href="#">
+											<i class="fa fa-twitter"></i>
+										</a>
+										<a href="#">
+											<i class="fa fa-google-plus"></i>
+										</a>
+										<a href="#">
+											<i class="fa fa-linkedin"></i>
+										</a>
+										<a href="#">
+											<i class="fa fa-envelope"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Blog Details Section End -->
+
+	<section class="related-product">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="section-title related__product__title">
+						<h2>commentaires</h2>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 commentaires">
+				{% for c in blog.commentairesBlog %}
+
+					<h5>
+						<i class="fa fa-user"></i>
+						{% if c.user.client != null %}
+							{{c.user.client.nom }}
+							{{c.user.client.prenom  }}
+							<small>
+								(client)
+							</small>
+						{% elseif c.user.agriculteur != null %}
+							{{c.user.agriculteur.nom }}
+							{{c.user.agriculteur.prenom  }}
+							<small>
+								(agriculteur)
+							</small>
+						{% else %}
+							{{c.user.admin.nom }}
+							{{c.user.admin.prenom  }}
+							<small>
+								(admin)
+							</small>
+						{% endif %}
+					</h5>
+					<p>
+						{{c.content | raw }}
+					</p>
+
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="related-product">
+	<div class="container">
+		<div class="row d-flex justify-content-center">
+			<div class="col-md-12  d-flex justify-content-center  commentaire"></div>
+			<form class="AjaxForm" action="{{path('commentaire_blog')}}" method="post" enctype="multipart/form-data">
+				<div class="col-lg-12">
+					<div class="form-group">
+						<textarea name="" class="form-control" id="commentaire" cols="30" rows="7" placeholder=" votre commentaire"></textarea>
+					</div>
+				</div>
+				<div class="col-lg-12">
+					<input name="ville" id="blog" type="hidden" value="{{blog.id}}">
+				</div>
+				<div class="col-lg-12">
+					{%  if app.user %}
+						<div class="newsletter_btn">
+							<button class="btn btn-danger input-lg " type="submit">Envoyer<i class="fa fa-send fa-tw cont-send"></i>
+							</button>
+						</div>
+					{% else %}
+						<div class="newsletter_text">
+							<p>Pour faire un commentaire,  vous devez
+								<br>
+								être connecté .
+							</p>
+						</div>
+					{% endif %}
+				</div>
+			</form>
+		</div>
+	</div>
+</section>{% endblock %}{% block javascripts %}
+<script src="{{asset('js/commentaire-blog-ajax.js')}}"></script>
+<script src="{{asset('js/subscribers-ajax.js')}}"></script>
+<script src="{{asset('js/search-blog.js')}}"></script>{% endblock %}

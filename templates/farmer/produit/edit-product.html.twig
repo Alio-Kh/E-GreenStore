@@ -1,0 +1,143 @@
+{%  extends "base_farmer.html.twig" %}
+{% block title %} {{controller_name}}
+{% endblock %}
+{% block bodyFarmer %}
+	<main class='main-content bgc-grey-100'>
+		<div id='mainContent'>
+			<div class="container-fluid">
+				<div class="row">
+					<h4 class="c-grey-900 mT-10 mB-30">
+						<a href="{{ path('show_market',{'id':produit.market.id})}}">
+							<i class="ti-arrow-left mR-10"></i>
+						</a>
+						Editer un produit</h4>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="bgc-white bd bdrs-3 p-20 mB-20">
+
+							<div class="masonry-item  ">
+								<div class="bgc-white p-20 bd">
+									<div class="mT-30">
+										<form action="{{path('edit_product',{'id':produit.id})}}" method="post" enctype='multipart/form-data'>
+											<div class="form-row">
+												{% if message is defined %}
+													<div class="form-group col-md-12">
+														<div class="alert alert-danger" role="alert">
+															<strong>{{message | raw }}</strong>
+														</div>
+													</div>
+												{% endif %}
+												{% if editer is defined %}
+													<div class="form-group col-md-12">
+														<div class="alert alert-info" role="alert">
+															<strong>{{editer | raw }}</strong>
+														</div>
+													</div>
+												{% endif %}
+												<div class="form-group col-md-6">
+
+													<label for="inputEmail4">Description</label>
+
+													<textarea class="form-control" name="description" placeholder="Description">{{ produit.description}}</textarea>
+												</div>
+												<div class="form-group col-md-6">
+													<label for="inputEmail5">Informations</label>
+													<textarea class="form-control" name="information" placeholder="Informations">{{produit.information}}</textarea>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputAddress">Date de production</label>
+												<input type="date" class="form-control" name="dateProduction" value="{{ produit.dateProduction | date("Y-m-d") }}">
+											</div>
+											<div class="form-group  ">
+												<label for="libelle">Libelle</label>
+												<input type="text" class="form-control" id="libelle" name="libelle" value="{{produit.libelle}}">
+											</div>
+											<div class="form-row">
+												<div class="form-group col-md-12">
+													<div class="form-group">
+														<label for="categorie">Categorie</label>
+														<select class="form-control" name="categorie" id="categorie">
+															{% for categorie in categories %}
+																{% if produit.categorie.id == categorie.id %}
+																	<option selected value="{{categorie.id}}">{{categorie.libelle}}</option>
+																{% else %}
+																	<option value="{{categorie.id}}">{{categorie.libelle}}</option>
+																{% endif %}
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+												<div class="form-group col-md-6">
+													<label for="prixU">Prix unitaire</label>
+													<input type="text" class="form-control" name="prixU" value="{{produit.prixUnitaire}}">
+												</div>
+												<div class="form-group col-md-6">
+													<label for="prixU">Quantité en stock</label>
+													<input type="text" class="form-control" name="stock" value="{{produit.stock}}">
+												</div>
+												<div class="form-group col-md-6">
+													<label for="promotion">Promotion (%)</label>
+													<input type="text" class="form-control" name="promotion" value="{{produit.promotion.reduction}}">
+												</div>
+												<div class="form-group col-md-3">
+													<label for="inputAddress">Date de début</label>
+													<input type="date" class="form-control" name="dateDebut" value="{{produit.promotion.dateDebut | date("Y-m-d")}}">
+												</div>
+												<div class="form-group col-md-3">
+													<label for="inputAddress">Date de  fin</label>
+													<input type="date" class="form-control" name="dateFin" value="{{produit.promotion.dateFin | date("Y-m-d")}}">
+												</div>
+												<div class=" col-md-12">
+													<img src="{{asset(produit.image)}}" class="img-sm img-rounded" alt="Cinque Terre">
+												</div>
+
+												<div class="form-group col-md-12">
+													<label for="inputGroupFileAddon01">Image</label>
+													<input type="file" class="form-control" name="file" id="customFile" accept="image/png, image/jpeg">
+													<br><br>
+												</div>
+											</div>
+										</div>
+										<div></div>
+										<div class="form-group">
+
+											<div class="checkbox checkbox-circle checkbox-info peers ai-c">
+												{% if produit.isBio %}
+													<input type="checkbox" name="bio" class="peer" checked>
+												{% else %}
+													<input type="checkbox" name="bio" class="peer">
+
+												{% endif %}
+												<label for="inputCall2" class=" peers peer-greed js-sb ai-c">
+													<span class="peer peer-greed">
+														produit biologique
+													</span>
+												</label>
+											</div>
+										</div>
+
+										<button type="submit" name="editProduct" class="btn btn-primary">Enregistrer le modifications</button>
+									</form>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>{% endblock %}{% block javascripts %}
+<script>
+	(function () {
+
+$(".custom-file-input").on("change", function () {
+console.log("d")
+var fileName = $(this).val().split("\\").pop();
+$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+
+})();
+</script>{% endblock %}

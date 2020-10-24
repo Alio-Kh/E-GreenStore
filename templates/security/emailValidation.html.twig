@@ -1,0 +1,34 @@
+{% extends 'base2.html.twig' %} {% block body %}
+
+<div class="registration">
+  <h3>Confirmation d'adresse email</h3>
+  <br />
+  <br />
+  {% if error %}
+   <h6 id="vp">  {{ error }}</h6> 
+  {% else %}
+  <h6 id="vp">
+    Un mot de passe est envoyé sur votre boite email <br />
+    Entrer le pour continuer votre inscription
+  </h6>
+  {% endif %}
+  {{ form_start(form) }}
+  <div class="registrationForm">
+    <div class="row">
+      {{ form_row(form.password, {'label':'Mot de passe','attr':{'placeholder':'Enter les 6 digits envoyé sur votre boite email', 'class':'champText'
+      }}) }}
+    </div>
+
+    <button type="submit" class="btn_success">Confirmer</button>
+  </div>
+  <br />
+  <br />
+  {{ form_end(form) }}
+
+  <a class="button" href="{{path('emailValidation')}}">
+	Renvoier le mot de passe !!
+</a>
+
+</div>
+
+{% endblock %}

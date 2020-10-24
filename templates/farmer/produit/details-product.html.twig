@@ -1,0 +1,100 @@
+{%  extends "base_farmer.html.twig" %}
+{% block title %} {{controller_name}}
+{% endblock %}
+{% block bodyFarmer %}
+	<!-- ### $App Screen Content ### -->
+	<main class='main-content bgc-grey-100'>
+		<div id='mainContent'>
+			<div class="container-fluid justify-center">
+				<div class="row">
+					<div class="col-md-8 col-sm-8">
+						<h4 class="c-grey-900 mT-10 mB-30">
+							<a href="{{ path('show_market',{'id':produit.market.id})}}">
+								<i class="ti-arrow-left mR-10"></i>
+							</a>
+							Détails du produit</h4>
+					</div>
+					<div class="col-md-4 col-sm-4"></div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="bgc-white bd bdrs-3 p-20 mB-20">
+							<div class="card mb-3">
+								<div class="row">
+									<div class="col-md-6">
+										<img src="{{asset(produit.image)}}" class="card-img-top " alt="Cinque Terre">
+									</div>
+								</div>
+								<div class="card-body">
+									<h5 class="card-title">Nom :
+										{{produit.libelle}}</h5>
+									<p class="card-text">Description :
+										{{produit.description}}</p>
+									<p class="card-text">Informations :
+										{{produit.information}}</p>
+									<p class="card-text">Categorie :{{produit.categorie.libelle}}</p>
+									{% if date(produit.promotion.dateFin) >= date() and date(produit.promotion.dateDebut) <= date() and produit.promotion.reduction >0  %}
+										<p class="card-text">
+											Promotion :
+											{{produit.promotion.reduction}}
+											%</p>
+									{% endif %}
+									{% if produit.isBio %}
+										<p class="card-text">
+											Bio : oui
+										</p>
+									{% else %}
+										<p class="card-text">
+											Bio : non
+										</p>
+									{% endif %}
+
+									<p class="card-text">Date de production :
+										{{produit.dateProduction | date('Y-m-d')}}</p>
+									<p class="card-text">La date à laquelle le produit a été ajouté à la plateforme:
+										{{produit.dateAjout | date('Y-m-d')}}</p>
+									<p class="card-text">Quantité en stock :
+										{{produit.stock }}</p>
+									<p class="card-text">Prix unitaire :
+										{{produit.prixUnitaire }}</p>
+										<p class="card-text">J'adores :
+										{{produit.recommedations | length }}</p>
+
+								</div>
+								<div class="card-footer ">
+									<h4 class="c-grey-900 mT-10 mB-30">Les commentaires
+									</h4>
+									{% if  produit.commentaires is empty %}
+										<div class="row">
+											<div class="col-md-12">
+												vide
+											</div>
+										</div>
+									{% endif %}
+									<div class="row">
+										{% for commentaire in produit.commentaires %}
+
+											<div class="col-md-12">
+												<h4>
+													<i class="ti-user mR-10"></i>
+													{{commentaire.client.nom }}
+													{{commentaire.client.prenom }}
+												</h4>
+												<p>{{commentaire.commentaire }}
+												</p>
+												<hr>
+											</div>
+
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</main>
+{% endblock  %}

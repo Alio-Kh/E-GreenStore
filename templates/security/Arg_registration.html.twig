@@ -1,0 +1,111 @@
+{% extends 'base2.html.twig' %}
+{% block body %}
+<div class="registration">
+  <h1>Insctiption</h1>
+  <br />
+  <small> Seulement pour les agriculteurs ...!</small>
+
+  {{ form_start(form) }}
+   
+  <div class="registrationForm">
+    <div class="errors">
+      {{ form_errors(form) }}
+    </div>
+    <div class="row">
+      {{ form_row(form.nom, {'attr':{'placeholder':'Votre nom','class':'champText'
+
+
+      }}) }}
+    </div>
+    <div class="row">
+      {{ form_row(form.prenom, {'attr':{'placeholder':'Votre prenom', 'class':'champText'
+
+
+      }}) }}
+    </div>
+    <div class="row">
+      {{ form_row(form.cin, {'attr':{'placeholder':'Votre numéro de la carte nationale','class':'champText'
+
+
+      }}) }}
+    </div>
+    <div class="row">
+      {{ form_row(form.adresse, {'attr':{'placeholder':'La location de votre ferme', 'class':'champText'
+
+
+      }}) }}
+    </div>
+    <div class="row">
+      {{ form_row(form.telephon, {'attr':{'placeholder':'numéro du téléphon','class':'champText'
+
+
+      }}) }}
+    </div>
+    <div class="row">
+      <p>Votre région</p>
+      {{ form_widget(form.region, {'attr':{ 'class':'champList  ' }}) }}
+    </div>
+  
+
+    <div class="row">
+      <p>Votre province</p>
+      {{ form_widget(form.ville, {'attr':{ 'class':'champList  ville ' }}) }}
+    </div>
+
+    <div class="row">
+      <p>Votre commune</p>
+      {{ form_widget(form.commune, {'attr':{ 'class':'champList commune ' }}) }}
+    </div>
+    
+
+    <button type="submit" class="btn_success_arg_reg">S'inscrire</button>
+    
+    
+
+  </div>
+</div>
+{{ form_rest(form) }}
+   
+{{ form_end(form) }}
+
+ 
+
+{% endblock %}
+ {% block javascripts %}
+<script>
+	$(document).ready(function () {
+          var $region = $('#form_region');
+             $region.change(function () {
+                  var $form = $(this).closest('form');
+                  var data = {};
+                  data['region'] = $region.val();
+                  data['activeregion'] = '1';
+                  $.ajax({
+                  url: $form.attr('action'),o
+                  type: $form.attr('method'),
+                  data: data,
+                      success: function (html) {
+                        $('.ville').hide();
+                        $('#form_ville').replaceWith($(html).find('#form_ville'));
+                         $('.commune').hide();
+                          $('#form_commune').replaceWith($(html).find('#form_commune'));
+                        }
+                    });
+              });
+         $(document).on('change','#form_ville',function(){
+                  var $form = $(this).closest('form');
+                  var data = {};
+                  data['ville'] = $('#form_ville').val();
+                  data['activeville'] = '1';
+                  $.ajax({
+                  url: $form.attr('action'),
+                  type: $form.attr('method'),
+                  data: data,
+                  success: function (html) {
+                          $('.commune').hide();
+                          $('#form_commune').replaceWith($(html).find('#form_commune'));
+                          }
+                   });
+        });
+  });
+</script>{% endblock %}

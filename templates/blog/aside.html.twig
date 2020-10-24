@@ -1,0 +1,35 @@
+		<div class="col-lg-4 col-md-5">
+					<div class="blog__sidebar">
+						<div class="blog__sidebar__search">
+							<form action="{{path('search_blog')}}">
+								<input type="text" name="query" id="search" placeholder="Rechercher...">
+								<button id="buttonSearch" type="submit">
+									<span class="icon_search"></span>
+								</button>
+							</form>
+						</div>
+						<div class="blog__sidebar__item">
+							<h4>Categories</h4>
+							<ul>
+								<li>
+									<a href="{{path('blog')}}">Toutes</a>
+								</li>
+								{% for categorie in categoriesBlog %}
+									<li>
+										<a href="{{path('category_blogs',{'id':categorie.id})}}">{{categorie.libelle}}
+										</a>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+						<div class="blog__sidebar__item">
+							<h4>Rechercher par</h4>
+							<div class="blog__sidebar__item__tags">
+
+								{% for tag in tags %}
+									<a href="{{path('tag_blogs',{'id':tag.id})}}">{{tag.name}}</a>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>

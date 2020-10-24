@@ -1,0 +1,181 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{controller_name}}
+{% endblock %}
+
+{% block body %}
+	<!-- Breadcrumb Section Begin -->
+	<section class="breadcrumb-section set-bg" data-setbg={{ asset('img/breadcrumb.jpg') }}>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="breadcrumb__text">
+						<h2>{{produit.libelle}}</h2>
+						<div class="breadcrumb__option">
+							<a href="{{path('home')}}">Accuiel</a>
+							<a href="{{path('category',{'id':produit.categorie.id})}}">{{produit.categorie.libelle}}</a>
+							<span>{{produit.libelle}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Breadcrumb Section End -->
+
+	<!-- Product Details Section Begin -->
+	<section class="product-details spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-6">
+					<div class="product__details__pic">
+						<div class="product__details__pic__item">
+							<img class="product__details__pic__item--large" src="{{asset(produit.image) }}" alt="">
+							{% if produit.isBio %}
+								<div class="product__bio">Bio</div>
+							{% endif %}
+						</div>
+						<div class="product__details__pic__slider owl-carousel">
+							{% for p in market.produits %}
+								{% if p.id != produit.id %}
+									<a href="{{path('shop_details',{'id':p.id})}}">
+										<img src="{{ asset(p.image) }}" alt="">
+										{% if produit.isBio %}
+											<div class="product__bio__small">Bio</div>
+										{% endif %}
+									</a>
+								{% endif %}
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6">
+					<div class="product__details__text">
+						<h3>{{produit.libelle}}</h3>
+						<div class="product__details__rating">
+							<i class="fa fa-heart " style="font-size:20px;color:red"></i>
+							<span class="js-liks-produit">{{produit.recommedations | length}}</span>
+						</div>
+                        {% if produit.promotion.reduction > 0 and  date(produit.promotion.dateFin) >= date() and date(produit.promotion.dateDebut) <= date() %}
+						<div class="product__details__price">{{produit.prixUnitaire - produit.prixUnitaire*(produit.promotion.reduction/100)}}DH</div>
+						{% else %}
+						<div class="product__details__price">{{produit.prixUnitaire}}DH</div>
+						{% endif %}
+						<p>{{produit.description}}</p>
+						<div class="product__details__text">
+							<a href="{{path('products_market',{'id':produit.market.id})}}">
+								<button type="button" class="btn btn-link">#voir le marche de ce produit</button>
+							</a>
+						</div>
+						<div class="product__details__quantity">
+							<div class="quantity">
+								<div class="pro-qty">
+									<input name="" id="qteProduit{{produit.id}}" type="text" value="{{qtePanier}}">
+								</div>
+							</div>
+						</div>
+						<a href="{{ path('cart_add', {'id': produit.id} )}}" class="primary-btn shopping-produit">AJOUTER AU PANIER</a>
+						<a href="{{path('produit_like', {'id':produit.id})}}" class="heart-icon  js-like-produit">
+
+							{% if app.user  and  produit.isLikedByClient(app.user) %}
+								<i class="fa fa-heart " style="font-size:20px;color:red"></i>
+
+							{% else %}
+								<i class="fa fa-heart-o" style="font-size:20px;color:red"></i>
+
+							{% endif %}
+						</a>
+
+					</div>
+				</div>
+				<div class="col-lg-12">
+					<div class="product__details__tab">
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-selected="true">Information</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab" aria-selected="false">commentaires (
+									<span id="nbrCommentaires">{{produit.commentaires | length}}</span>
+								</a>
+							</li>
+						</ul>
+						<div class="tab-content">
+
+							<div class="tab-pane active" id="tabs-2" role="tabpanel">
+								<div class="product__details__tab__desc">
+									<p>
+										{{produit.information}}
+									</p>
+								</div>
+							</div>
+							<div class="tab-pane" id="tabs-3" role="tabpanel">
+								<div class="product__details__tab__desc commentaires">
+									{% for c in produit.commentaires %}
+										<h6><i class="fa fa-user"></i>
+											{{c.client.nom }}
+											{{c.client.prenom  }}</h6>
+										<p>
+											{{c.commentaire}}</p>
+										<hr>
+									{% endfor %}
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Product Details Section End -->
+
+	<!-- Related Product Section Begin -->
+	<section class="related-product">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="section-title related__product__title">
+						<h2>commentaire</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row d-flex justify-content-center">
+				<div class="col-md-12  d-flex justify-content-center  commentaire"></div>
+				<form class="AjaxForm" action="{{path('commentaire')}}" method="post" enctype="multipart/form-data">
+					<div class="col-lg-12">
+						<div class="form-group">
+							<textarea name="" class="form-control" id="commentaire" cols="30" rows="7" placeholder=" votre commentaire"></textarea>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<input name="ville" id="produit" type="hidden" value="{{produit.id}} ">
+					</div>
+					<div class="col-lg-12">
+						{%  if app.user %}
+							<div class="newsletter_btn">
+								<button class="btn btn-danger input-lg " type="submit">Envoyer<i class="fa fa-send fa-tw cont-send"></i>
+								</button>
+							</div>
+						{% else %}
+							<div class="newsletter_text">
+								<p>Pour faire un commentaire,  vous devez
+									<br>
+									être connecté en tant que client.
+								</p>
+							</div>
+						{% endif %}
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+	{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('js/like-card-details.js')}}"></script>
+	<script src="{{asset('js/commentaire-ajax.js')}}"></script>
+	<script src="{{asset('js/shoping-details-ajax.js')}}"></script>
+	<script src="{{asset('js/subscribers-ajax.js')}}"></script>
+
+{% endblock %}

@@ -1,0 +1,93 @@
+{%  extends "base_farmer.html.twig" %}
+{% block title %} {{controller_name}}
+{% endblock %}
+{% block stylesheets %}
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
+<script>
+ 
+window.onload = function () {
+ {% for vs in ventes %}
+	{% set v1 = vs|first %}
+var chart = new CanvasJS.Chart("chartContainer{{v1.year}}", {
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	animationEnabled: true,
+	title:{
+		text: "Année "+{{v1.year}}   
+	},
+	axisX: {
+		interval: 1,
+		intervalType: "month",
+		valueFormatString: "MMM"
+	},
+	axisY:{
+		title: "Prix au Maroc ",
+		valueFormatString: "##0DH"
+	},
+	data: [{        
+		type: "line",
+		markerSize: 12,
+		xValueFormatString: "MMM, YYYY",
+		yValueFormatString: "####.DH",
+		dataPoints: [
+			 { x: new Date(Number({{v1.year}}),Number({{v1.month}}-1), 1), y: {{v1.ventes}}, indexLabel: "+"+{{v1.ventes}}, markerType: "triangle",  markerColor: "#6B8E23" },
+			 {% set counter = 0 %}
+			 {% set previous = vs|first  %}
+			{% for vente in vs %}
+			   {% if counter != 0 %}
+			      {% if previous.ventes > vente.ventes %}
+ 			         { x: new Date(Number({{vente.year}}),Number({{vente.month}}-1), 1), y: {{vente.ventes}}, indexLabel:" "+{{vente.ventes-previous.ventes}}, markerType: "cross",  markerColor: "tomato" },
+				  {% else %}
+				   	 { x: new Date(Number({{vente.year}}),Number({{vente.month}}-1), 1), y: {{vente.ventes}}, indexLabel: "+"+{{vente.ventes-previous.ventes}}, markerType: "triangle",  markerColor: "#6B8E23" },
+			        {% set v1 = vente %}
+				  {% endif %}
+			    {% endif %}
+				{% set counter = 1 %}
+				 {% set previous = vente  %}
+ 			{% endfor %}
+		]
+	}]
+   });
+  chart.render();
+
+ {% endfor %}
+}
+</script>
+{% endblock %}
+{% block bodyFarmer %}
+	<main class='main-content bgc-grey-100'>
+		<div id='mainContent'>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="c-grey-900 mT-10 mB-30">
+							<a href=" {{path('farmer_statistics')}}">
+								<i class="ti-arrow-left mR-10"></i>
+							</a>Toutes les années </h4>
+					</div>
+				</div>
+				 {% if years is empty %}
+				   <div class="alert alert-info" role="alert">
+					   <strong>Vous n'avez pas de statistiques </strong>
+				   </div>
+				 {% endif %}
+				{% for year in years | reverse  %}
+				<div class="row">
+					<div class="col-md-12">
+						<div class="bgc-white bd bdrs-3 p-20 mB-20">
+							<div class="masonry-item  ">
+								<div class="bgc-white p-20 bd">
+									<div class="mT-30">
+										<div id="chartContainer{{year}}" style="height: 300px;" >
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</main>
+	{% endblock  %}
+
