@@ -53,6 +53,7 @@ class PanierServiceImpl implements PanierService
         $this->session->set('panier', $panier);
          $p[0]['panier'] = $panier;
         $p[0]['msg'] = $msg;
+        $this->session->set('totalWithLivraison', $this->getTotal());
         return  $p;
     }
 
@@ -65,6 +66,12 @@ class PanierServiceImpl implements PanierService
         }
 
         $this->session->set('panier', $panier);
+        if($this->session->get('totalWithLivraison')){
+            $livr=$this->session->get('totalWithLivraison')-$this->getTotal();
+            $this->addToTotal($livr);
+         }else{
+           $this->session->set('totalWithLivraison', $this->getTotal());
+         }
       }
 
 
@@ -77,6 +84,13 @@ class PanierServiceImpl implements PanierService
             $panier[$id] = 1;
 
         $this->session->set('panier', $panier);
+
+      if($this->session->get('totalWithLivraison')){
+         $livr=$this->session->get('totalWithLivraison')-$this->getTotal();
+         $this->addToTotal($livr);
+      }else{
+        $this->session->set('totalWithLivraison', $this->getTotal());
+      }
         return $panier;
     }
 
@@ -87,6 +101,7 @@ class PanierServiceImpl implements PanierService
         $total =0;
         $this->session->set('totalItems', $total);
         $this->session->set('panier', $panier);
+        $this->session->set('totalWithLivraison', $total);
     }
 
     public function getFullPanier(): array
@@ -135,5 +150,23 @@ class PanierServiceImpl implements PanierService
         }
 
         return  $total - $reduction;
+    }
+    
+    public function getTotalWithLivraison():float{
+        return $this->session->get('totalWithLivraison');
+    }
+    
+    public function addToTotal($val) 
+    {
+      
+        $this->session->set('totalWithLivraison', $this->session->get('totalWithLivraison')+$val);
+
+    }
+
+    public function decreaseFromTotal($val) 
+    {
+      
+        $this->session->set('totalWithLivraison',  $this->session->get('totalWithLivraison')-$val);
+
     }
 }

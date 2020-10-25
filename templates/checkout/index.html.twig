@@ -139,6 +139,8 @@ $("#next-delievery").attr("disabled", true);
 								</style>
 								<div class="col-lg-8 col-md-6">
 									<div id="delievery" class="checkout__input__checkbox">
+									{% set typeLivraison =  app.session.get('typeLivraison') %}
+									{% set fraisLivr=0 %}
 										{% for item in typeLivraisons %}
 											<div class="alwaysshowme">
 												<br>
@@ -168,12 +170,18 @@ $("#next-delievery").attr("disabled", true);
 													{{ item.description | raw }}
 												</span>
 											</div><br>
-											{% if item.libelle == "Livraison standard" %}
-												<input class="shipping" type="radio" name='shipping' value={{item.id}} id="{{ item.libelle }}" checked>
+											{% if item.libelle == "Livraison standard" and typeLivraison is null %}
+												<input class="livraisonchecked"   type="radio" name='shipping' value={{item.id}} id="{{ item.libelle }}" checked>
 											{% else %}
-												<input type="radio" name='shipping' value={{item.id}} id="{{ item.libelle }}">
-											{% endif %}
+											    {% if   item.id == typeLivraison %}
+												<input class="livraisonchecked" type="radio" name='shipping' value={{item.id}} id="{{ item.libelle }}" checked>
+											  	  {% set fraisLivr = item.frais %}
 
+												{% else %}
+												<input class="livraisonchecked" type="radio" name='shipping' value={{item.id}} id="{{ item.libelle }}" >
+												{% endif %}
+											{% endif %}
+											
 											{% if item.frais == 0 %}
 												<label for="{{item.libelle}}">
 													Gratuit</label>
@@ -184,6 +192,7 @@ $("#next-delievery").attr("disabled", true);
 											{% endif %}
 
 										{% endfor %}
+										<input type="hidden" value="{{path('livr_checked')}}" id="livr_checked">
 										<br><br>
 										<button type='button' id="back-delievery" class="site-btn">
 											back</button>
@@ -259,16 +268,23 @@ $("#next-delievery").attr("disabled", true);
 								</div>
 								{% if true %}
 									<div class="checkout__order__total">Frais de Livraison
-										<span>
-											{{total | number_format(2, '.', ',')}}
+
+										<span id="frais_de_livraison">
+											{{fraisLivr}}
 										</span>
+									 
 									</div>
 									<br>
 								{% endif %}
 
 								<div class="checkout__order__total">Totale (TTC)
-									<span>{{ totalTtc | number_format(2, '.', ',')}}
+								   {% if  app.session.get('totalWithLivraison') is null %}
+									<span id="total_ttc">{{ totalTtc | number_format(2, '.', ',')}}
 										MAD</span>
+									{% else %}
+									<span id="total_ttc">{{ app.session.get('totalWithLivraison') | number_format(2, '.', ',')}}
+										MAD</span>
+									{% endif %}
 								</div>
 								{# 
 																																																																																																																																																																																																																																																																																																																																																																																																		<div class="checkout__input__checkbox">

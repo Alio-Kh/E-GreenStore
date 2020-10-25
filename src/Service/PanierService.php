@@ -17,4 +17,10 @@ interface PanierService
     public function getNombreProduit(): int;
 
     public function getTotal(): float;
+
+    public function addToTotal($val);
+
+    public function decreaseFromTotal($val);
+    
+    public function getTotalWithLivraison():float;
 }
