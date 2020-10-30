@@ -24,7 +24,7 @@ class ProduitController extends AbstractController
     public function addProduct(Market $market, ProduitService $produitService, Request $request,  CategorieRepository $categorieRepository)
     {
         $this->denyAccessUnlessGranted('ADDP', $market);
-        $categories = $categorieRepository->findCategoryNotEmpty();
+        $categories = $categorieRepository->findAll();
         if ($request->request->has('addProduct')) {
             $result = $produitService->addP($market, $request);
             $produit = $result[1];
@@ -50,7 +50,7 @@ class ProduitController extends AbstractController
     public function editProduct(ProduitService $produitService, CategorieRepository $categorieRepository, Request $request, Produit $produit, PromotionRepository   $promotionRepository)
     {
         $this->denyAccessUnlessGranted('EDIT', $produit);
-        $categories = $categorieRepository->findCategoryNotEmpty();
+        $categories = $categorieRepository->findAll();
         $produit->setPromotion($promotionRepository->findOneBy(['id' => $produit->getPromotion()->getId()]));
         if ($request->request->has('editProduct')) {
             $result = $produitService->editP($request, $produit);
@@ -96,17 +96,16 @@ class ProduitController extends AbstractController
     /**
      * @Route("/{id}/delete", name="delete_product")
      */
-    public function deleteProduct(Request $request, Produit $produit,ProduitRepository $produitRepository)
+    public function deleteProduct(Request $request, Produit $produit, ProduitRepository $produitRepository)
     {
         $this->denyAccessUnlessGranted('delete', $produit);
-        if($produitRepository->verifyForDelete($produit)){
+        if ($produitRepository->verifyForDelete($produit)) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($produit);
-           // $entityManager->flush();
-        }else{
-
+            // $entityManager->flush();
+        } else {
         }
-      
+
         return $this->redirect($request->headers->get('referer'));
     }
 }

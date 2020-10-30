@@ -36,8 +36,8 @@ class Produit
      * @ORM\Column(type="text" )
      */
     private $description;
-    
-    
+
+
 
     /**
      * @ORM\Column(type="date")
@@ -70,7 +70,7 @@ class Produit
      * @ORM\ManyToOne(targetEntity="Market", inversedBy="produits")
      */
     private $market;
- 
+
 
     /**
      * @ORM\ManyToOne(targetEntity="Tva", inversedBy="produits")
@@ -82,7 +82,7 @@ class Produit
      */
     private $recommedations;
 
-   
+
 
     /**
      * @ORM\OneToMany(targetEntity="Vente", mappedBy="produit")
@@ -99,9 +99,9 @@ class Produit
      */
     private $libelle;
 
-      /**
-      * @Vich\UploadableField(mapping="produitPlace", fileNameProperty="image")
-      */
+    /**
+     * @Vich\UploadableField(mapping="produitPlace", fileNameProperty="image")
+     */
     private $imageFile;
 
     /**
@@ -126,16 +126,16 @@ class Produit
      */
     private $unite;
 
-   /**
+    /**
      * @ORM\OneToOne(targetEntity=Promotion::class, cascade={"persist", "remove"})
      */
     private $promotion;
-   
+
 
     public function __construct()
     {
         $this->recommedations = new ArrayCollection();
-         $this->ventes = new ArrayCollection();
+        $this->ventes = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
         $this->ligneCommandes = new ArrayCollection();
     }
@@ -186,7 +186,7 @@ class Produit
     {
         return $this->dateProduction;
     }
-  
+
     public function setDateProduction(\DateTimeInterface $dateProduction): self
     {
         $this->dateProduction = $dateProduction;
@@ -203,7 +203,7 @@ class Produit
     {
         $this->image = $image;
         if ($this->imageFile) {
-            $this->image ='img/product/'. $image;
+            $this->image = 'img/product/' . uniqid() . $image;
         }
 
         return $this;
@@ -265,8 +265,8 @@ class Produit
         return $this;
     }
 
-   
-    
+
+
 
     /**
      * Get the value of recommedations
@@ -288,9 +288,9 @@ class Produit
         return $this;
     }
 
-   
 
-    
+
+
 
     /**
      * Get the value of tva
@@ -420,9 +420,9 @@ class Produit
         return $this;
     }
 
-  
 
-    
+
+
 
     public function addVente(Vente $vente): self
     {
@@ -501,7 +501,7 @@ class Produit
         return $this;
     }
 
-   
+
 
     public function getCategorie(): ?Categorie
     {
@@ -527,25 +527,26 @@ class Produit
         return $this;
     }
 
-        /** 
-    *  @param User $user
-    *  @return boolen
-    */
-    public function isLikedByClient(User $user):bool{
-        foreach($this->recommedations as $like){
-            if($like->getClient()===$user->getClient())return true;
+    /** 
+     *  @param User $user
+     *  @return boolen
+     */
+    public function isLikedByClient(User $user): bool
+    {
+        foreach ($this->recommedations as $like) {
+            if ($like->getClient() === $user->getClient()) return true;
         }
-        return  false ;
-      }
- 
-  
+        return  false;
+    }
+
+
 
 
     /**
      * Get the value of imageFile
      *
      * @return  mixed
-     */ 
+     */
     public function getImageFile()
     {
         return $this->imageFile;
@@ -556,14 +557,13 @@ class Produit
      *
      * @param  mixed  $imageFile
      * @throws /Exception 
-     */ 
-    public function setImageFile( $imageFile): void
+     */
+    public function setImageFile($imageFile): void
     {
         $this->imageFile = $imageFile;
         if ($imageFile) {
-                $this->updatedAt= new \DateTime();
+            $this->updatedAt = new \DateTime();
         }
-
     }
 
     public function getPromotion(): ?Promotion
@@ -578,5 +578,3 @@ class Produit
         return $this;
     }
 }
-
- 
