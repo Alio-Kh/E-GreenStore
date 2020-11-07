@@ -48,44 +48,42 @@ class BlogRepository extends ServiceEntityRepository
     }
     */
     public function findByContent($val)
-    {     
+    {
         return  $this->createQueryBuilder('b')
-        ->where(' b.content like :val or  b.title like :val')
-        ->andWhere('b.published=1')
-        ->setParameter('val','%'.$val.'%')
-        ->getQuery()
-        ->getResult();
+            ->where(' b.content like :val or  b.title like :val')
+            ->andWhere('b.published=1')
+            ->setParameter('val', '%' . $val . '%')
+            ->getQuery()
+            ->getResult();
     }
 
     public function findBlogByPublished()
-    {     
-        return  $this->createQueryBuilder('b' )
-        ->where('b.published=1')
-        ->getQuery()
-        ->getResult();
+    {
+        return  $this->createQueryBuilder('b')
+            ->where('b.published=1')
+            ->getQuery()
+            ->getResult();
     }
 
     public function findBlogByCategorieAndPublished($categorie)
-    {     
-        return  $this->createQueryBuilder('b' )
-        ->where('b.categorie=:id and b.published=1')
-        ->setParameter('id',$categorie->getId())
-        ->getQuery()
-        ->getResult();
+    {
+        return  $this->createQueryBuilder('b')
+            ->where('b.categorie=:id and b.published=1')
+            ->setParameter('id', $categorie->getId())
+            ->getQuery()
+            ->getResult();
     }
 
     public function bestBlogs()
-    {     
-        return  $this->createQueryBuilder('b' )
-        ->join('App\Entity\CommentaireBlog ','c')
-        ->where(' b.published=1 and c.blog=b.id   ')
-        ->groupBy('b.id')
-        ->select('b ,COUNT(b.id) as nombreCommentaires')
-        ->orderBy('nombreCommentaires', 'DESC')
-        ->setMaxResults(3)
-        ->getQuery()
-        ->getResult();
+    {
+        return  $this->createQueryBuilder('b')
+            ->leftJoin('b.commentairesBlog', 'c')
+            ->andWhere(' b.published=1 ')
+            ->groupBy('b.id')
+            ->addSelect('COUNT(b.id) as nombreCommentaires')
+            ->orderBy('nombreCommentaires', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
     }
-    
-    
 }

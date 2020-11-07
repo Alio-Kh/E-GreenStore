@@ -31,10 +31,10 @@ class Categorie
      */
     private $image;
 
-      /**
-      * @Vich\UploadableField(mapping="categoriePlace", fileNameProperty="image")
-      */
-      private $imageFile;
+    /**
+     * @Vich\UploadableField(mapping="categoriePlace", fileNameProperty="image")
+     */
+    private $imageFile;
 
     /**
      * @ORM\OneToMany(targetEntity=Produit::class, mappedBy="categorie")
@@ -52,7 +52,7 @@ class Categorie
         $this->blogs = new ArrayCollection();
     }
 
- 
+
 
     public function getId(): ?int
     {
@@ -80,10 +80,9 @@ class Categorie
     {
         $this->image = $image;
         if ($this->imageFile) {
-            $this->image ='img/categories/'. $image;
-           
+            $this->image = 'img/categories/' . uniqid() . $image;
         }
-            
+
         return $this;
     }
 
@@ -94,8 +93,8 @@ class Categorie
     {
         return $this->produits;
     }
-     
-    
+
+
     public function addProduit(Produit $produit): self
     {
         if (!$this->produits->contains($produit)) {
@@ -123,13 +122,13 @@ class Categorie
     {
         return (string) $this->getLibelle();
     }
- 
 
-     /**
+
+    /**
      * Get the value of imageFile
      *
      * @return  mixed
-     */ 
+     */
     public function getImageFile()
     {
         return $this->imageFile;
@@ -140,11 +139,10 @@ class Categorie
      *
      * @param  mixed  $imageFile
      * @throws /Exception 
-     */ 
-    public function setImageFile( $imageFile): void
+     */
+    public function setImageFile($imageFile): void
     {
         $this->imageFile = $imageFile;
-        
     }
 
     /**
