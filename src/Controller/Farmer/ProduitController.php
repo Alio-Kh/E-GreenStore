@@ -51,6 +51,7 @@ class ProduitController extends AbstractController
     {
         $this->denyAccessUnlessGranted('EDIT', $produit);
         $categories = $categorieRepository->findAll();
+        dump($request->request);
         $produit->setPromotion($promotionRepository->findOneBy(['id' => $produit->getPromotion()->getId()]));
         if ($request->request->has('editProduct')) {
             $result = $produitService->editP($request, $produit);
