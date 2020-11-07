@@ -7,26 +7,30 @@ use App\Entity\Promotion;
 use App\Repository\ProduitRepository;
 use App\Repository\PromotionRepository;
 use App\Repository\TvaRepository;
+use App\Repository\TypeLivraisonRepository;
 use App\Service\PanierService;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use App\Service\ProduitService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class PanierServiceImpl implements PanierService
+class PanierServiceImpl extends AbstractController implements PanierService  
 {
     private $session;
     private $produitRepository;
     private $promotionRepository;
     private $tvaRepository;
     private $produitService;
+    private $typeLivraisonRepository;
 
-    public function __construct(SessionInterface $session, ProduitRepository $produitRepository, PromotionRepository $promotionRepository, TvaRepository $tvaRepository, ProduitService $produitService)
+    public function __construct(TypeLivraisonRepository $typeLivraisonRepository,SessionInterface $session, ProduitRepository $produitRepository, PromotionRepository $promotionRepository, TvaRepository $tvaRepository, ProduitService $produitService)
     {
         $this->session = $session;
         $this->produitRepository = $produitRepository;
         $this->promotionRepository = $promotionRepository;
         $this->tvaRepository = $tvaRepository;
         $this->produitService = $produitService;
+        $this->typeLivraisonRepository=$typeLivraisonRepository;
     }
     public function addToPanier($id)
     {
@@ -53,8 +57,13 @@ class PanierServiceImpl implements PanierService
         $this->session->set('panier', $panier);
          $p[0]['panier'] = $panier;
         $p[0]['msg'] = $msg;
-        $this->session->set('totalWithLivraison', $this->getTotal());
-        return  $p;
+         if($this->session->has('typeLivraison')){
+            $frais=$this->typeLivraisonRepository->findOneBy(['id'=>$this->session->get('typeLivraison')])->getFrais();
+             $this->setTotal($this->getTotal()+$frais);
+          }else{
+           $this->session->set('totalWithLivraison', $this->getTotal());
+         }        
+         return  $p;
     }
 
     public function removeFromPanier(int $id)
@@ -66,10 +75,10 @@ class PanierServiceImpl implements PanierService
         }
 
         $this->session->set('panier', $panier);
-        if($this->session->get('totalWithLivraison')){
-            $livr=$this->session->get('totalWithLivraison')-$this->getTotal();
-            $this->addToTotal($livr);
-         }else{
+        if($this->session->has('typeLivraison')){
+            $frais=$this->typeLivraisonRepository->findOneBy(['id'=>$this->session->get('typeLivraison')])->getFrais();
+             $this->setTotal($this->getTotal()+$frais);
+          }else{
            $this->session->set('totalWithLivraison', $this->getTotal());
          }
       }
@@ -85,10 +94,10 @@ class PanierServiceImpl implements PanierService
 
         $this->session->set('panier', $panier);
 
-      if($this->session->get('totalWithLivraison')){
-         $livr=$this->session->get('totalWithLivraison')-$this->getTotal();
-         $this->addToTotal($livr);
-      }else{
+        if($this->session->has('typeLivraison')){
+            $frais=$this->typeLivraisonRepository->findOneBy(['id'=>$this->session->get('typeLivraison')])->getFrais();
+             $this->setTotal($this->getTotal()+$frais);
+        }else{
         $this->session->set('totalWithLivraison', $this->getTotal());
       }
         return $panier;
@@ -102,10 +111,12 @@ class PanierServiceImpl implements PanierService
         $this->session->set('totalItems', $total);
         $this->session->set('panier', $panier);
         $this->session->set('totalWithLivraison', $total);
+        $this->session->remove('typeLivraison');
+
     }
 
     public function getFullPanier(): array
-    {
+   {
 
         $panier = $this->session->get('panier', []);
 
@@ -168,5 +179,8 @@ class PanierServiceImpl implements PanierService
       
         $this->session->set('totalWithLivraison',  $this->session->get('totalWithLivraison')-$val);
 
+    }
+    public function setTotal($val){
+        $this->session->set('totalWithLivraison',$val);
     }
 }
