@@ -29,6 +29,11 @@ security:
             logout:
                 path: logout
                 target: home
+            guard:
+                entry_point: App\Security\GithubAuthenticator
+                authenticators:
+                    - App\Security\GithubAuthenticator
+                    - App\Security\FacebookAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

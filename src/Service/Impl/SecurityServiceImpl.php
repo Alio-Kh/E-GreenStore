@@ -121,11 +121,23 @@ class SecurityServiceImpl extends AbstractController implements SecurityService
         return $agriculteur;
     }
 
+     public function persist_cli($client)
+    {
+        $random = 'cli' . random_int(1, 100000000);
+        $client->setReference($random);
+        $this->em->persist($client);
+        $this->em->detach($client);
+
+        return $client;
+    }
+
     public function save_cli($user, $client)
     {
         $user->setClient($client);
-        $hash = $this->encoder->encodePassword($user, $user->getPassword());
+        if ($user->getPassword()) {
+          $hash = $this->encoder->encodePassword($user, $user->getPassword());
         $user->setPassword($hash);
+        }  
         $user->setRoles(['ROLE_CLIENT']);
         $this->em->persist($client);
         $this->em->persist($user);
@@ -152,15 +164,6 @@ class SecurityServiceImpl extends AbstractController implements SecurityService
         return $password;
     }
 
-    public function persist_cli($client)
-    {
-        $random = 'cli' . random_int(1, 100000000);
-        $client->setReference($random);
-        $this->em->persist($client);
-        $this->em->detach($client);
-
-        return $client;
-    }
 
     public function seve_agr($user, $agriculteur)
     {

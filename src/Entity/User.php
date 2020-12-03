@@ -37,7 +37,7 @@ class User implements UserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @Assert\Length(min="8", minMessage="votre mot de passe doit faire minimum 8 caractères")
      */
     private $password;
@@ -66,6 +66,16 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=CommentaireBlog::class, mappedBy="user")
      */
     private $commentairesBlog;
+
+    /**
+     * @ORM\Column(type="string",unique=true, length=255, nullable=true)
+     */
+    private $github_id;
+
+    /**
+     * @ORM\Column(type="string",unique=true, length=255, nullable=true)
+     */
+    private $facebook_id;
 
     public function __construct()
     { 
@@ -121,9 +131,9 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
-        return (string) $this->password;
+        return  $this->password;
     }
 
     public function setPassword(string $password): self
@@ -216,6 +226,38 @@ class User implements UserInterface
                 $commentaireBlog->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGithubId(): ?string
+    {
+        return $this->github_id;
+    }
+
+    public function setGithubId(?string $github_id): self
+    {
+        $this->github_id = $github_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of facebook_id
+     */ 
+    public function getFacebook_id(): ?string
+    {
+        return $this->facebook_id;
+    }
+
+    /**
+     * Set the value of facebook_id
+     *
+     * @return  self
+     */ 
+    public function setFacebook_id($facebook_id):self
+    {
+        $this->facebook_id = $facebook_id;
 
         return $this;
     }

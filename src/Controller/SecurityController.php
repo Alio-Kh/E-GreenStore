@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Mailer\MailerInterface;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
 class SecurityController extends AbstractController
 {
@@ -274,5 +276,27 @@ class SecurityController extends AbstractController
         return $this->render('security/reset_password.html.twig', [
             'form' => $form->createView(), 'categories' => $categories, 'error' => $error, 'email' => $email
         ]);
+    }
+
+     /**
+     * @Route("/connect/github", name="github_connect")
+     */
+    public function connect_github(ClientRegistry $clientRegistry)
+    {
+       $client = $clientRegistry->getClient('github'); 
+      return  $client->redirect([],['read:user', 'user:email']);
+    }
+
+     /**
+     * @Route("/connect/facebook", name="facebook_connect")
+     */
+    public function connect_facebook(ClientRegistry $clientRegistry)
+    {
+      return $clientRegistry
+            ->getClient('facebook')
+            ->redirect([
+                'public_profile', 'email' // the scopes you want to access
+            ],[])
+        ;
     }
 }
