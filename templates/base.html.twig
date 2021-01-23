@@ -35,7 +35,6 @@
 		{% block body %}{% endblock %}
 
 		{% include "footer.html.twig" %}
-
 		<script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
 		<script src="{{asset('js/bootstrap.min.js')}}"></script>
 		<script src="{{asset('js/jquery.nice-select.min.js')}}"></script>
@@ -45,7 +44,18 @@
 		<script src="{{asset('js/owl.carousel.min.js')}}"></script>
 		<script src="{{asset('js/main.js')}}"></script>
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-
+		<script>
+			$(document).ready(function () {
+document.querySelectorAll('nav li a').forEach(function (link) {
+link.addEventListener('click', function (e) {
+$('nav li.active').removeClass('active');
+var $parent = $(this).parent();
+$parent.addClass('active');
+// e.preventDefault();
+});
+});
+});
+		</script>
+		{% block javascripts %}{% endblock %}
 	</body>
 </html>
