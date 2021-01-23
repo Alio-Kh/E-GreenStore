@@ -299,4 +299,17 @@ class SecurityController extends AbstractController
             ],[])
         ;
     }
+
+     /**
+     * @Route("/connect/google", name="google_connect")
+     */
+    public function connect_google(ClientRegistry $clientRegistry)
+    {
+      return $clientRegistry
+            ->getClient('google')
+            ->redirect([],[
+                'public_profile', 'email' // the scopes you want to access
+            ])
+        ;
+    }
 }

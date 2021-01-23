@@ -77,6 +77,11 @@ class User implements UserInterface
      */
     private $facebook_id;
 
+    /**
+     * @ORM\Column(type="string",unique=true, length=255, nullable=true)
+     */
+    private $google_id;
+
     public function __construct()
     { 
         $this->commentairesBlog = new ArrayCollection();
@@ -258,6 +263,26 @@ class User implements UserInterface
     public function setFacebook_id($facebook_id):self
     {
         $this->facebook_id = $facebook_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of google_id
+     */ 
+    public function getGoogle_id(): ?string
+    {
+        return $this->google_id;
+    }
+
+    /**
+     * Set the value of google_id
+     *
+     * @return  self
+     */ 
+    public function setGoogle_id($google_id)
+    {
+        $this->google_id = $google_id;
 
         return $this;
     }

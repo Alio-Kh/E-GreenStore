@@ -24,20 +24,26 @@
 				<button type="submit" class="btn_success">Connécter</button>
 			</div>
 		</form>
-       
-        <br>
-        <div class="text-center ">
-        Ou connecter par : <br>
-		<a href="" class="icon-button instagram"><i class="icon-instagram fa fa-instagram"></i><span></span></a>
-		<a href="" class="icon-button facebook"><i class="icon-facebook fa fa-facebook"></i><span></span></a>
-		<a href="" class="icon-button google-plus"><i class="icon-google-plus fa fa-google-plus"></i><span></span></a>
+
+		<br>
+		<div class="text-center ">
+			Ou connecter par :
+			<br>
+			<a href="{{path('facebook_connect')}}" class="icon-button facebook">
+				<i class="icon-facebook fa fa-facebook"></i>
+				<span></span>
+			</a>
+			<a href="{{path('google_connect')}}" class="icon-button google-plus">
+				<i class="icon-google-plus fa fa-google-plus"></i>
+				<span></span>
+			</a>
 		</div>
-     	<div class="text-center d-flex">
-   		 <div class="list-group w-45  mx-auto justify-content-center ">
- 		 <a  href="{{path('client_registration1')}}" class="list-group-item list-group-item-action">Creer un compte agriculteur.</a>
- 		 <a href="{{path('client_registration1')}}" class="list-group-item list-group-item-action">Creer un compte  client.</a>
- 		 </div>
-		 </div>
+		<div class="text-center d-flex">
+			<div class="list-group   mx-auto justify-content-center ">
+				<a href="{{path('client_registration1')}}" class="list-group-item list-group-item-action">Creer un compte client.</a>
+				<a href="{{path('agr_registration1')}}" class="list-group-item list-group-item-action">Creer un compte agriculteur .</a>
+			</div>
+		</div>
 		<br>
 		<a class="button" href="{{path('forget_password')}}">
 			Avez vous oubliez le mot de passe?
@@ -48,10 +54,6 @@
 
 {% block javascripts %}
 
-<script >
-/*(document).ready(function(){
+	<script>/*(document).ready(function(){
         $("#exampleModalCenter").modal('show');
-    });*/
-
-</script>
-{% endblock %}
+    });*/</script>{% endblock %}

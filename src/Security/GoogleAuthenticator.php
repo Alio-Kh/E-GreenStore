@@ -16,8 +16,9 @@ use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Service\SecurityService;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use League\OAuth2\Client\Provider\GoogeUser;
 
- class FacebookAuthenticator extends socialAuthenticator{
+ class GoogleAuthenticator extends socialAuthenticator{
    
    use TargetPathTrait;
 
@@ -40,36 +41,36 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
     public function supports(Request $request)
     {
-      return 'oauth_check' === $request->attributes->get('_route') && $request->get('service') === 'facebook';
+      return 'oauth_check' === $request->attributes->get('_route') && $request->get('service') === 'google';
     }
 
     public function getCredentials(Request $request)
     {
-        return $this->fetchAccessToken($this->clientRegistry->getClient('facebook'));
+        return $this->fetchAccessToken($this->clientRegistry->getClient('google'));
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        /**@var FabookUser  $clientFacebook */
-        $clientFacebook = $this->clientRegistry->getClient('facebook')->fetchUserFromToken($credentials);
-        $facebook_user = $this->userRepository->findOneBy(['email' => $clientFacebook->getEmail()]);
-        if($facebook_user)  {
-          return $facebook_user;
+        /**@var GoogeUser  $clientFacebook */
+        $clientGoogle = $this->clientRegistry->getClient('google')->fetchUserFromToken($credentials);
+        $google_user = $this->userRepository->findOneBy(['email' => $clientGoogle->getEmail()]);
+        if($google_user)  {
+          return $google_user;
         }
         else{
-          $facebook_user= $this->userRepository->findOneBy(['facebook_id' => $clientFacebook->getId()]);
-          if ($facebook_user){
-            return $facebook_user;
+          $google_user= $this->userRepository->findOneBy(['google_id' => $clientGoogle->getId()]);
+          if ($google_user){
+            return $google_user;
           } 
           /** if the user is logging in for the first time, and 
            * with a different email address
            */
             $user=new User();
-            $user->setEmail($clientFacebook->getEmail());
-            $user->setFacebook_id($clientFacebook->getid());
+            $user->setEmail($clientGoogle->getEmail());
+            $user->setFacebook_id($clientGoogle->getid());
             $client= new Client();
-            $client->setNom($clientFacebook->getFirstName());
-            $client->setPrenom($clientFacebook->getLastName());
+            $client->setNom($clientGoogle->getFirstName());
+            $client->setPrenom($clientGoogle->getLastName());
             $this->securityService->persist_cli($client);
             $this->securityService->save_cli($user,$client);
             return $user;
