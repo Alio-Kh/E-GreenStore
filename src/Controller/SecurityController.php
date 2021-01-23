@@ -278,38 +278,28 @@ class SecurityController extends AbstractController
         ]);
     }
 
-     /**
-     * @Route("/connect/github", name="github_connect")
-     */
-    public function connect_github(ClientRegistry $clientRegistry)
-    {
-       $client = $clientRegistry->getClient('github'); 
-      return  $client->redirect([],['read:user', 'user:email']);
-    }
 
-     /**
+    /**
      * @Route("/connect/facebook", name="facebook_connect")
      */
     public function connect_facebook(ClientRegistry $clientRegistry)
     {
-      return $clientRegistry
+        return $clientRegistry
             ->getClient('facebook')
             ->redirect([
                 'public_profile', 'email' // the scopes you want to access
-            ],[])
-        ;
+            ], []);
     }
 
-     /**
+    /**
      * @Route("/connect/google", name="google_connect")
      */
     public function connect_google(ClientRegistry $clientRegistry)
     {
-      return $clientRegistry
+        return $clientRegistry
             ->getClient('google')
-            ->redirect([],[
+            ->redirect([], [
                 'public_profile', 'email' // the scopes you want to access
-            ])
-        ;
+            ]);
     }
 }
